@@ -26,7 +26,7 @@ const CenteredContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const AuthContainer = styled.div`
+const RegisterContainer = styled.div`
   width: 80%;
   max-width: 400px;
   margin: 0 auto;
@@ -41,6 +41,7 @@ const Title = styled.h2`
   margin-bottom: 20px;
   text-align: center;
 `;
+
 
 const Form = styled.form`
   display: flex;
@@ -92,7 +93,7 @@ const SubmitButton = styled.button`
   margin-top: 20px;
 `;
 
-const RegisterLink = styled(Link)`
+const LoginLink = styled(Link)`
   text-decoration: none;
   color: #fff;
   font-weight: bold;
@@ -128,8 +129,9 @@ const OrText = styled.div`
   color: #ccc;
 `;
 
-const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
+const Register = () => {
     const [formData, setFormData] = useState({
+        name: '',
         email: '',
         password: '',
         showPassword: false,
@@ -159,12 +161,21 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
         <>
             <GlobalStyle />
             <CenteredContainer>
-                <AuthContainer>
+                <RegisterContainer>
                     <BackArrow to="/">
                         <img src={setaVoltar} alt="Seta Voltar" />
                     </BackArrow>
-                    <Title>Login</Title>
+                    <Title>Registrar</Title>
                     <Form onSubmit={handleSubmit}>
+                        <Label htmlFor="name">Nome</Label>
+                        <Input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
                         <Label htmlFor="email">Email</Label>
                         <Input
                             type="email"
@@ -188,18 +199,18 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
                                 {formData.showPassword ? '👁️' : '👁️‍🗨️'}
                             </TogglePassword>
                         </PasswordContainer>
-                        <SubmitButton type="submit">Logar</SubmitButton>
+                        <SubmitButton type="submit">Registrar</SubmitButton>
+                        <Separator>
+                            <Line />
+                            <OrText>Ou</OrText>
+                            <Line />
+                        </Separator>
                     </Form>
-                    <Separator>
-                        <Line />
-                        <OrText>OU</OrText>
-                        <Line />
-                    </Separator>
-                    <RegisterLink to="/register">Ainda não é usuário? Registrar-se</RegisterLink>
-                </AuthContainer>
+                    <LoginLink to="/login">Já é usuário? Conecte-se</LoginLink>
+                </RegisterContainer>
             </CenteredContainer>
         </>
     );
 };
 
-export default AuthPage;
+export default Register;

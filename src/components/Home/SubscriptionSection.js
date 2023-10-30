@@ -60,7 +60,7 @@ const SubscriptionSection = () => {
             </SmallText>
             <Button>Teste Grátis</Button>
             <SmallText>
-                Ou economize dinheiro com uma assinatura anual, de estudante ou um plano família
+                Ou economize dinheiro com uma assinatura de estudante ou um plano família
             </SmallText>
             <BoldText2>
                 Escolha a sua assinatura
