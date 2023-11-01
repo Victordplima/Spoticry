@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   background-color: #000000;
@@ -36,20 +37,25 @@ const Button = styled.button`
   border: solid 2px white;
   padding: 10px;
   border-radius: 10px 10px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 const Header = () => {
-    return (
-        <HeaderContainer>
-            <Logo>
-                <LogoImage src={logo} alt="Logo" />
-            </Logo>
-            <ButtonsContainer>
-                <Button>Registrar</Button>
-                <Button>Login</Button>
-            </ButtonsContainer>
-        </HeaderContainer>
-    );
+  return (
+    <HeaderContainer>
+      <Logo>
+        <LogoImage src={logo} alt="Logo" />
+      </Logo>
+      <ButtonsContainer>
+        <Button><Link to="/register">Registrar</Link></Button>
+        <Button><Link to="/login">Login</Link></Button>
+      </ButtonsContainer>
+    </HeaderContainer>
+  );
 };
 
 export default Header;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Home from '../components/Home/Header'
 import SubscriptionSection from '../components/Home/SubscriptionSection';
@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const HomePage = () => {
+  useEffect(() => {
+    document.title = "Spoticry";
+  }, []);
+  
     return (
         <div>
             <GlobalStyle />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
 
@@ -16,6 +16,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function FeedPage() {
+  useEffect(() => {
+    document.title = "Feed - Spoticry";
+  }, []);
+
   return (
     <>
       <GlobalStyle />
