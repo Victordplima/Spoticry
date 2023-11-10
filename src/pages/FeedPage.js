@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
+import Content from '../components/Feed/Content';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -24,6 +25,7 @@ function FeedPage() {
     <>
       <GlobalStyle />
       <Header />
+      <Content />
     </>
   );
 }
