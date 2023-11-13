@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ModalWrapper = styled.div`
+  font-family: 'Roboto', sans-serif;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background-color: #1d1d1d;
   padding: 20px;
   border-radius: 8px;
 `;
@@ -24,13 +25,19 @@ const MusicInput = styled.input`
 `;
 
 const MusicButton = styled.button`
+  margin-top: 12px;
   padding: 10px 20px;
-  background-color: #1db954;
+  background-color: #037dfa;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 `;
+
+const Title = styled.h2`
+  padding-bottom: 12px;
+`
+
 
 const AddMusicModal = ({ closeModal, addMusic }) => {
     const [title, setTitle] = useState('');
@@ -45,7 +52,7 @@ const AddMusicModal = ({ closeModal, addMusic }) => {
 
     return (
         <ModalWrapper>
-            <h2>Adicionar Nova Música</h2>
+            <Title>Adicionar Nova Música</Title>
             <MusicForm onSubmit={handleSubmit}>
                 <MusicInput
                     type="text"
