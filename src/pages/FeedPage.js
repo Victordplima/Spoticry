@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
 import Content from '../components/Feed/Content';
 import ListSongs from '../components/Feed/ListSongs';
+import RemoveSongButton from '../components/Feed/RemoveSongButton';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -28,6 +29,7 @@ function FeedPage() {
       <Header />
       <Content />
       <ListSongs />
+      <RemoveSongButton />
     </>
   );
 }

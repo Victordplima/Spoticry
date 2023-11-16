@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import btnMenu from '../../assets/btnMenu.png';
 import searchIcon from '../../assets/lupa.png';
 import logo from '../../assets/logo.png';
+import user from '../../assets/user.jpg';
 import Sidebar from './Sidebar';
 
 const HeaderContainer = styled.header`
@@ -84,7 +85,7 @@ const Header = () => {
           <SearchInput type="text" placeholder="Pesquisa" />
         </SearchContainer>
         <UserInfo>
-          <UserImage src="caminho/da/imagem/do/usuario.png" alt="Usuário" />
+          <UserImage src={user} alt="Usuário" />
         </UserInfo>
       </HeaderContainer>
       <Sidebar isOpen={isOpen} />

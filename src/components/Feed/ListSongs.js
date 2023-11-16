@@ -5,7 +5,7 @@ import btnDireita from '../../assets/btnDireita.png';
 import btnEsquerda from '../../assets/btnEsquerda.png';
 
 const CarouselContainer = styled.div`
-  //max-width: 800px;
+  max-width: 90%;
   margin: 0 auto;
   overflow: hidden;
 `;
@@ -18,16 +18,16 @@ const CarouselWrapper = styled.div`
 const SongCard = styled.div`
   flex: 0 0 auto;
   box-sizing: border-box;
-  width: 300px; /* Ajuste conforme necessário */
-  margin-right: 20px; /* Espaçamento entre os cartões */
-  border: 1px solid #ccc;
+  width: 300px;
+  margin-right: 20px;
+  //border: 1px solid #ccc;
   padding: 10px;
 `;
 
 const SongImage = styled.img`
-  max-width: 100%;
-  max-height: 150px;
-  margin-bottom: 10px;
+  width: 260px;
+  height: 180px;
+  //margin-bottom: 5px;
 `;
 
 const StyledButton = styled.button`
@@ -37,8 +37,18 @@ const StyledButton = styled.button`
   margin-left: auto;
 
   img {
-    max-width: 30px; /* Ajuste conforme necessário */
+    max-width: 30px;
   }
+`;
+
+const SongTitle = styled.strong`
+  color: #fff;
+  font-size: 18px;
+`;
+
+const ArtistName = styled.p`
+  color: #a9a9a9;
+  font-size: 14px;
 `;
 
 const ListSongs = () => {
@@ -68,13 +78,23 @@ const ListSongs = () => {
         fetchData();
     }, [token]);
 
+
+    const getYouTubeVideoId = (url) => {
+        // eslint-disable-next-line no-useless-escape
+        const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
+        return match ? match[1] : null;
+    };
+
     const getYouTubeThumbnail = (url) => {
-        const videoId = url.split('v=')[1];
+        const videoId = getYouTubeVideoId(url);
+
         if (videoId) {
-            return `https://img.youtube.com/vi/${videoId}/default.jpg`;
+            return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         }
+
         return 'https://via.placeholder.com/150';
     };
+
 
     const scrollCarousel = (direction) => {
         const newPosition = direction === 'next' ? carouselPosition + cardWidth : carouselPosition - cardWidth;
@@ -100,8 +120,8 @@ const ListSongs = () => {
                     <SongCard key={musica.id}>
                         <SongImage src={getYouTubeThumbnail(musica.url)} alt="Thumbnail" />
                         <div>
-                            <strong>{musica.title}</strong>
-                            <p>{musica.artist}</p>
+                            <SongTitle>{musica.title}</SongTitle>
+                            <ArtistName>{musica.artist}</ArtistName>
                         </div>
                     </SongCard>
                 ))}
