@@ -12,6 +12,7 @@ const SidebarContainer = styled.div`
   left: ${({ isOpen }) => (isOpen ? '0' : '-250px')};
   transition: left 0.3s ease;
   border-right: 1px solid #292929;
+  z-index: 4;
 `;
 
 const SidebarButton = styled.div`

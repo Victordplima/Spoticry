@@ -8,11 +8,41 @@ const CarouselContainer = styled.div`
   max-width: 90%;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+`;
+
+const CarouselHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+`;
+
+const ControlsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  img {
+    max-width: 30px;
+  }
+`;
+
+const LeftButton = styled(StyledButton)`
+  margin-right: 0px;  // Ajuste a distância à direita
+`;
+
+const RightButton = styled(StyledButton)`
+  margin-left: 10px;   // Ajuste a distância à esquerda
 `;
 
 const CarouselWrapper = styled.div`
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 `;
 
 const SongCard = styled.div`
@@ -28,17 +58,6 @@ const SongImage = styled.img`
   width: 260px;
   height: 180px;
   //margin-bottom: 5px;
-`;
-
-const StyledButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-left: auto;
-
-  img {
-    max-width: 30px;
-  }
 `;
 
 const SongTitle = styled.strong`
@@ -106,15 +125,17 @@ const ListSongs = () => {
 
     return (
         <CarouselContainer>
-            <h2>Carrossel de Músicas</h2>
-            <StyledButton onClick={() => scrollCarousel('prev')} disabled={carouselPosition === 0}>
-                <img src={btnEsquerda} alt="Seta para a esquerda" />
-                Anterior
-            </StyledButton>
-            <StyledButton onClick={() => scrollCarousel('next')} disabled={carouselPosition >= cardWidth * (musicas.length - 3)}>
-                Próximo
-                <img src={btnDireita} alt="Seta para a direita" />
-            </StyledButton>
+            <CarouselHeader>
+                <h2>Em alta</h2>
+                <ControlsContainer>
+                    <LeftButton onClick={() => scrollCarousel('prev')} disabled={carouselPosition === 0}>
+                        <img src={btnEsquerda} alt="Seta para a esquerda" />
+                    </LeftButton>
+                    <RightButton onClick={() => scrollCarousel('next')} disabled={carouselPosition >= cardWidth * (musicas.length - 3)}>
+                        <img src={btnDireita} alt="Seta para a direita" />
+                    </RightButton>
+                </ControlsContainer>
+            </CarouselHeader>
             <CarouselWrapper style={{ transform: `translateX(-${carouselPosition}px)` }}>
                 {musicas.map((musica) => (
                     <SongCard key={musica.id}>

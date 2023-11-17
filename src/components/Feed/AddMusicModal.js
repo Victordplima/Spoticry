@@ -10,6 +10,7 @@ const ModalWrapper = styled.div`
   background-color: #1d1d1d;
   padding: 20px;
   border-radius: 8px;
+  z-index: 3;
 `;
 
 const MusicForm = styled.form`
