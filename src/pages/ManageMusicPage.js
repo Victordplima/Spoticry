@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function FeedPage() {
+function ManageMusicPage() {
   useEffect(() => {
     document.title = "Gerenciar músicas - Spoticry";
   }, []);
@@ -37,4 +37,4 @@ function FeedPage() {
   );
 }
 
-export default FeedPage;
+export default ManageMusicPage;
