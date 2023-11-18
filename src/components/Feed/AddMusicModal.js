@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+`;
+
 const ModalWrapper = styled.div`
   font-family: 'Roboto', sans-serif;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: #1d1d1d;
   padding: 20px;
   border-radius: 8px;
@@ -37,49 +46,57 @@ const MusicButton = styled.button`
 
 const Title = styled.h2`
   padding-bottom: 12px;
-`
-
+`;
 
 const AddMusicModal = ({ closeModal, addMusic }) => {
-    const [title, setTitle] = useState('');
-    const [artist, setArtist] = useState('');
-    const [url, setUrl] = useState('');
+  const [title, setTitle] = useState('');
+  const [artist, setArtist] = useState('');
+  const [url, setUrl] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        addMusic(title, artist, url);
-        closeModal();
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addMusic(title, artist, url);
+    closeModal();
+  };
 
-    return (
-        <ModalWrapper>
-            <Title>Adicionar Nova Música</Title>
-            <MusicForm onSubmit={handleSubmit}>
-                <MusicInput
-                    type="text"
-                    placeholder="Título"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                />
-                <MusicInput
-                    type="text"
-                    placeholder="Artista"
-                    value={artist}
-                    onChange={(e) => setArtist(e.target.value)}
-                    required
-                />
-                <MusicInput
-                    type="text"
-                    placeholder="URL"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    required
-                />
-                <MusicButton type="submit">Adicionar Música</MusicButton>
-            </MusicForm>
-        </ModalWrapper>
-    );
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      // Se o clique ocorrer fora do modal (no overlay), feche o modal
+      closeModal();
+    }
+  };
+
+  return (
+    <Overlay onClick={handleOverlayClick}>
+      <ModalWrapper>
+        <Title>Adicionar Nova Música</Title>
+        <MusicForm onSubmit={handleSubmit}>
+          <MusicInput
+            type="text"
+            placeholder="Título"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <MusicInput
+            type="text"
+            placeholder="Artista"
+            value={artist}
+            onChange={(e) => setArtist(e.target.value)}
+            required
+          />
+          <MusicInput
+            type="text"
+            placeholder="URL"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
+          <MusicButton type="submit">Adicionar Música</MusicButton>
+        </MusicForm>
+      </ModalWrapper>
+    </Overlay>
+  );
 };
 
 export default AddMusicModal;

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
 import AddSongButton from '../components/Feed/AddSongButton';
-import ListSongs from '../components/Feed/ListSongs';
+//import ListSongs from '../components/Feed/ListSongs';
 import RemoveSongButton from '../components/Feed/RemoveSongButton';
 import EditSongButton from '../components/Feed/EditSongButton';
 
@@ -21,17 +21,18 @@ const GlobalStyle = createGlobalStyle`
 
 function FeedPage() {
   useEffect(() => {
-    document.title = "Feed - Spoticry";
+    document.title = "Gerenciar músicas - Spoticry";
   }, []);
 
   return (
     <>
       <GlobalStyle />
       <Header />
-      <ListSongs />
+      <h2>Músicas</h2>
       <AddSongButton />
       <RemoveSongButton />
       <EditSongButton />
+      <h2>Playlists</h2>
     </>
   );
 }

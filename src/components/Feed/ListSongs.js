@@ -33,11 +33,11 @@ const StyledButton = styled.button`
 `;
 
 const LeftButton = styled(StyledButton)`
-  margin-right: 0px;  // Ajuste a distância à direita
+  margin-right: 0px;
 `;
 
 const RightButton = styled(StyledButton)`
-  margin-left: 10px;   // Ajuste a distância à esquerda
+  margin-left: 10px;
 `;
 
 const CarouselWrapper = styled.div`
@@ -50,14 +50,12 @@ const SongCard = styled.div`
   box-sizing: border-box;
   width: 300px;
   margin-right: 20px;
-  //border: 1px solid #ccc;
   padding: 10px;
 `;
 
 const SongImage = styled.img`
   width: 260px;
   height: 180px;
-  //margin-bottom: 5px;
 `;
 
 const SongTitle = styled.strong`
@@ -69,6 +67,12 @@ const ArtistName = styled.p`
   color: #a9a9a9;
   font-size: 14px;
 `;
+
+const CarouselName = styled.h2`
+  color: white;
+  font-size: 32px;
+`;
+
 
 const ListSongs = () => {
     const [musicas, setMusicas] = useState([]);
@@ -99,6 +103,7 @@ const ListSongs = () => {
 
 
     const getYouTubeVideoId = (url) => {
+        // não tire o comentario abaixo
         // eslint-disable-next-line no-useless-escape
         const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
         return match ? match[1] : null;
@@ -126,7 +131,7 @@ const ListSongs = () => {
     return (
         <CarouselContainer>
             <CarouselHeader>
-                <h2>Em alta</h2>
+                <CarouselName>🔥 Em alta</CarouselName>
                 <ControlsContainer>
                     <LeftButton onClick={() => scrollCarousel('prev')} disabled={carouselPosition === 0}>
                         <img src={btnEsquerda} alt="Seta para a esquerda" />

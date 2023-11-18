@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import btnHome from '../../assets/btnHome.png';
 import btnUpgrade from '../../assets/btnUpgrade.png';
+import btnGerenciador from '../../assets/btnGerenciador.png';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const SidebarContainer = styled.div`
   width: 250px;
@@ -23,10 +25,14 @@ const SidebarButton = styled.div`
   background-color: ${({ active }) => (active ? '#555' : 'transparent')};
   border-radius: 8px;
   margin: 10px 10px;
+
+  &:hover {
+    background-color: #555;
+  }
 `;
 
 const ButtonImage = styled.img`
-justify-content: left;
+  justify-content: left;
   width: 20px;
   height: 20px;
   margin-right: 10px;
@@ -38,32 +44,49 @@ const ButtonText = styled.span`
   font-weight: bold;
 `;
 
+const NavLinkButton = styled(NavLink)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const Sidebar = ({ isOpen }) => {
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 768 && isOpen) {
-            }
-        };
+  const location = useLocation();
 
-        window.addEventListener('resize', handleResize);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && isOpen) {
+      }
+    };
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [isOpen]);
+    window.addEventListener('resize', handleResize);
 
-    return (
-        <SidebarContainer isOpen={isOpen}>
-            <SidebarButton active={true}>
-                <ButtonImage src={btnHome} alt="Ícone do Botão" />
-                <ButtonText>Início</ButtonText>
-            </SidebarButton>
-            <SidebarButton active={false}>
-                <ButtonImage src={btnUpgrade} alt="Ícone do Botão" />
-                <ButtonText>Upgrade</ButtonText>
-            </SidebarButton>
-        </SidebarContainer>
-    );
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isOpen]);
+
+  return (
+    <SidebarContainer isOpen={isOpen}>
+      <NavLinkButton to="/feed" className={location.pathname === '/feed' ? 'active' : ''}>
+        <SidebarButton active={location.pathname === '/feed'}>
+          <ButtonImage src={btnHome} alt="Ícone do Botão" />
+          <ButtonText>Início</ButtonText>
+        </SidebarButton>
+      </NavLinkButton>
+      <NavLinkButton to="/manage-music" className={location.pathname === '/manage-music' ? 'active' : ''}>
+        <SidebarButton active={location.pathname === '/manage-music'}>
+          <ButtonImage src={btnGerenciador} alt="Ícone do Botão" />
+          <ButtonText>Gerenciar músicas</ButtonText>
+        </SidebarButton>
+      </NavLinkButton>
+      <NavLinkButton to="/" className={location.pathname === '/' ? 'active' : ''}>
+        <SidebarButton active={location.pathname === '/'}>
+          <ButtonImage src={btnUpgrade} alt="Ícone do Botão" />
+          <ButtonText>Upgrade</ButtonText>
+        </SidebarButton>
+      </NavLinkButton>
+    </SidebarContainer>
+  );
 };
 
 export default Sidebar;
