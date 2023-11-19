@@ -13,18 +13,19 @@ const NotFoundWrapper = styled.div`
 `;
 
 const ErrorMessage = styled.h1`
-  color: #ff0000; /* Cor vermelha */
+  //font-size: 64px;
+  color: red;
   margin-bottom: 10px;
 `;
 
 const NotFoundMessage = styled.p`
-  font-size: 18px;
+  //font-size: 24px;
   margin-bottom: 20px;
 `;
 
 const HomeButton = styled(Link)`
   padding: 10px 20px;
-  background-color: #037dfa; /* Cor azul */
+  background-color: #037dfa;
   color: #fff;
   text-decoration: none;
   border-radius: 4px;

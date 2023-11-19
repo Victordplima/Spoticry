@@ -19,10 +19,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const HomePage = () => {
-  useEffect(() => {
-    document.title = "Spoticry";
-  }, []);
-  
+    useEffect(() => {
+        document.title = "Spoticry";
+    }, []);
+
     return (
         <div>
             <GlobalStyle />

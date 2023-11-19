@@ -68,29 +68,29 @@ const UserImage = styled.img`
 `;
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
 
-  return (
-    <>
-      <HeaderContainer>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <MenuButton onClick={toggleSidebar} />
-          <Logo />
-        </div>
-        <SearchContainer>
-          <SearchInput type="text" placeholder="Pesquisa" />
-        </SearchContainer>
-        <UserInfo>
-          <UserImage src={user} alt="Usuário" />
-        </UserInfo>
-      </HeaderContainer>
-      <Sidebar isOpen={isOpen} />
-    </>
-  );
+    return (
+        <>
+            <HeaderContainer>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <MenuButton onClick={toggleSidebar} />
+                    <Logo />
+                </div>
+                <SearchContainer>
+                    <SearchInput type="text" placeholder="Pesquisa" />
+                </SearchContainer>
+                <UserInfo>
+                    <UserImage src={user} alt="Usuário" />
+                </UserInfo>
+            </HeaderContainer>
+            <Sidebar isOpen={isOpen} />
+        </>
+    );
 };
 
 export default Header;

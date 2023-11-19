@@ -12,7 +12,6 @@ const AddSongButton = () => {
         setIsModalOpen(false);
     };
 
-
     return (
         <div>
             <button onClick={openModal}>Adicionar Nova Música</button>

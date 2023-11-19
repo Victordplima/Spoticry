@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
 import AddSongButton from '../components/ManageMusic/AddSongButton';
-//import ListSongs from '../components/Feed/ListSongs';
 import RemoveSongButton from '../components/ManageMusic/RemoveSongButton';
 import EditSongButton from '../components/ManageMusic/EditSongButton';
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -22,22 +21,22 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function ManageMusicPage() {
-  useEffect(() => {
-    document.title = "Gerenciar músicas - Spoticry";
-  }, []);
+    useEffect(() => {
+        document.title = "Gerenciar músicas - Spoticry";
+    }, []);
 
-  return (
-    <>
-      <GlobalStyle />
-      <Header />
-      <h2>Músicas</h2>
-      <AddSongButton />
-      <RemoveSongButton />
-      <EditSongButton />
-      <h2>Playlists</h2>
-      <ToastContainer />
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <Header />
+            <h2>Músicas</h2>
+            <AddSongButton />
+            <RemoveSongButton />
+            <EditSongButton />
+            <h2>Playlists</h2>
+            <ToastContainer />
+        </>
+    );
 }
 
 export default ManageMusicPage;

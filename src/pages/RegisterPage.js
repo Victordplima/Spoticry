@@ -129,88 +129,88 @@ const OrText = styled.div`
 `;
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    showPassword: false,
-  });
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        showPassword: false,
+    });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-  const handleTogglePassword = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      showPassword: !prevData.showPassword,
-    }));
-  };
+    const handleTogglePassword = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            showPassword: !prevData.showPassword,
+        }));
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('Formulário submetido:', formData);
-    // Adicione aqui a lógica para armazenar o token no Local Storage
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log('Formulário submetido:', formData);
+        // Adicione aqui a lógica para armazenar o token no Local Storage
+    };
 
-  return (
-    <>
-      <GlobalStyle />
-      <CenteredContainer>
-        <RegisterContainer>
-          <BackArrow to="/">
-            <img src={setaVoltar} alt="Seta Voltar" />
-          </BackArrow>
-          <Title>Registrar</Title>
-          <Form onSubmit={handleSubmit}>
-            <Label htmlFor="name">Nome</Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <Label htmlFor="password">Senha</Label>
-            <PasswordContainer>
-              <PasswordInput
-                type={formData.showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <TogglePassword onClick={handleTogglePassword}>
-                {formData.showPassword ? '👁️' : '👁️‍🗨️'}
-              </TogglePassword>
-            </PasswordContainer>
-            <SubmitButton type="submit">Registrar</SubmitButton>
-            <Separator>
-              <Line />
-              <OrText>Ou</OrText>
-              <Line />
-            </Separator>
-          </Form>
-          <LoginLink to="/login">Já é usuário? Conecte-se</LoginLink>
-        </RegisterContainer>
-      </CenteredContainer>
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <CenteredContainer>
+                <RegisterContainer>
+                    <BackArrow to="/">
+                        <img src={setaVoltar} alt="Seta Voltar" />
+                    </BackArrow>
+                    <Title>Registrar</Title>
+                    <Form onSubmit={handleSubmit}>
+                        <Label htmlFor="name">Nome</Label>
+                        <Input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                        <Label htmlFor="password">Senha</Label>
+                        <PasswordContainer>
+                            <PasswordInput
+                                type={formData.showPassword ? 'text' : 'password'}
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                            <TogglePassword onClick={handleTogglePassword}>
+                                {formData.showPassword ? '👁️' : '👁️‍🗨️'}
+                            </TogglePassword>
+                        </PasswordContainer>
+                        <SubmitButton type="submit">Registrar</SubmitButton>
+                        <Separator>
+                            <Line />
+                            <OrText>Ou</OrText>
+                            <Line />
+                        </Separator>
+                    </Form>
+                    <LoginLink to="/login">Já é usuário? Conecte-se</LoginLink>
+                </RegisterContainer>
+            </CenteredContainer>
+        </>
+    );
 };
 
 export default Register;

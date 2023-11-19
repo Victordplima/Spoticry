@@ -50,43 +50,43 @@ const NavLinkButton = styled(NavLink)`
 `;
 
 const Sidebar = ({ isOpen }) => {
-  const location = useLocation();
+    const location = useLocation();
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768 && isOpen) {
-      }
-    };
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768 && isOpen) {
+            }
+        };
 
-    window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isOpen]);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [isOpen]);
 
-  return (
-    <SidebarContainer isOpen={isOpen}>
-      <NavLinkButton to="/feed" className={location.pathname === '/feed' ? 'active' : ''}>
-        <SidebarButton active={location.pathname === '/feed'}>
-          <ButtonImage src={btnHome} alt="Ícone do Botão" />
-          <ButtonText>Início</ButtonText>
-        </SidebarButton>
-      </NavLinkButton>
-      <NavLinkButton to="/manage-music" className={location.pathname === '/manage-music' ? 'active' : ''}>
-        <SidebarButton active={location.pathname === '/manage-music'}>
-          <ButtonImage src={btnGerenciador} alt="Ícone do Botão" />
-          <ButtonText>Gerenciar músicas</ButtonText>
-        </SidebarButton>
-      </NavLinkButton>
-      <NavLinkButton to="/" className={location.pathname === '/' ? 'active' : ''}>
-        <SidebarButton active={location.pathname === '/'}>
-          <ButtonImage src={btnUpgrade} alt="Ícone do Botão" />
-          <ButtonText>Upgrade</ButtonText>
-        </SidebarButton>
-      </NavLinkButton>
-    </SidebarContainer>
-  );
+    return (
+        <SidebarContainer isOpen={isOpen}>
+            <NavLinkButton to="/feed" className={location.pathname === '/feed' ? 'active' : ''}>
+                <SidebarButton active={location.pathname === '/feed'}>
+                    <ButtonImage src={btnHome} alt="Ícone do Botão" />
+                    <ButtonText>Início</ButtonText>
+                </SidebarButton>
+            </NavLinkButton>
+            <NavLinkButton to="/manage-music" className={location.pathname === '/manage-music' ? 'active' : ''}>
+                <SidebarButton active={location.pathname === '/manage-music'}>
+                    <ButtonImage src={btnGerenciador} alt="Ícone do Botão" />
+                    <ButtonText>Gerenciar músicas</ButtonText>
+                </SidebarButton>
+            </NavLinkButton>
+            <NavLinkButton to="/" className={location.pathname === '/' ? 'active' : ''}>
+                <SidebarButton active={location.pathname === '/'}>
+                    <ButtonImage src={btnUpgrade} alt="Ícone do Botão" />
+                    <ButtonText>Upgrade</ButtonText>
+                </SidebarButton>
+            </NavLinkButton>
+        </SidebarContainer>
+    );
 };
 
 export default Sidebar;

@@ -8,16 +8,16 @@ import ManageMusicPage from '../../pages/ManageMusicPage';
 import NotFound from '../../pages/NotFound';
 
 const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/feed" element={<FeedPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/manage-music" element={<ManageMusicPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/manage-music" element={<ManageMusicPage />} />
+            <Route path="*" element={<NotFound />} />
+        </Routes>
+    );
 };
 
 export default AppRoutes;

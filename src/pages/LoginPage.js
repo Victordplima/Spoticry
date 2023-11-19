@@ -159,124 +159,124 @@ const LoadingContainer = styled.div`
 
 
 const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    showPassword: false,
-  });
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        showPassword: false,
+    });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-  const handleToggleRememberMe = () => {
-    setRememberMe(prevState => !prevState);
-  };
+    const handleToggleRememberMe = () => {
+        setRememberMe(prevState => !prevState);
+    };
 
-  const handleTogglePassword = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      showPassword: !prevData.showPassword,
-    }));
-  };
+    const handleTogglePassword = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            showPassword: !prevData.showPassword,
+        }));
+    };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-    try {
-      setIsLoading(true);
-      setErrorMessage('');
+        try {
+            setIsLoading(true);
+            setErrorMessage('');
 
-      const response = await axios.post(
-        'https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/user/login',
-        {
-          email: formData.email,
-          password: formData.password,
+            const response = await axios.post(
+                'https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/user/login',
+                {
+                    email: formData.email,
+                    password: formData.password,
+                }
+            );
+
+            localStorage.setItem('token', response.data.token); // Armazenar o token no localStorage
+            console.log('Token:', response.data.token);
+            console.log('Login bem sucedido:', response.data);
+
+            // Redirecionar para a página de feed
+            navigate('/feed');
+        } catch (error) {
+            setIsLoading(false);
+
+            if (error.response && error.response.data && error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage('Ocorreu um erro ao tentar fazer login. Por favor, tente novamente.');
+            }
         }
-      );
+    };
 
-      localStorage.setItem('token', response.data.token); // Armazenar o token no localStorage
-      console.log('Token:', response.data.token);
-      console.log('Login bem sucedido:', response.data);
-
-      // Redirecionar para a página de feed
-      navigate('/feed');
-    } catch (error) {
-      setIsLoading(false);
-
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage('Ocorreu um erro ao tentar fazer login. Por favor, tente novamente.');
-      }
-    }
-  };
-
-  return (
-    <>
-      <GlobalStyle />
-      <CenteredContainer>
-        <AuthContainer>
-          <BackArrow to="/">
-            <img src={setaVoltar} alt="Seta Voltar" />
-          </BackArrow>
-          <Title>Login</Title>
-          <Form onSubmit={handleLogin}>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <Label htmlFor="password">Senha</Label>
-            <PasswordContainer>
-              <PasswordInput
-                type={formData.showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <TogglePassword onClick={handleTogglePassword}>
-                {formData.showPassword ? '👁️' : '👁️‍🗨️'}
-              </TogglePassword>
-            </PasswordContainer>
-            <RememberMeCheckbox>
-              <input
-                type="checkbox"
-                id="rememberMe"
-                checked={rememberMe}
-                onChange={handleToggleRememberMe}
-              />
-              <label htmlFor="rememberMe">Permanecer Logado</label>
-            </RememberMeCheckbox>
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-            <SubmitButton type="submit" disabled={isLoading}>
-              {isLoading ? <LoadingContainer /> : 'Logar'}
-            </SubmitButton>
-          </Form>
-          <Separator>
-            <Line />
-            <OrText>OU</OrText>
-            <Line />
-          </Separator>
-          <RegisterLink to="/register">Ainda não é usuário? Registrar-se</RegisterLink>
-        </AuthContainer>
-      </CenteredContainer>
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <CenteredContainer>
+                <AuthContainer>
+                    <BackArrow to="/">
+                        <img src={setaVoltar} alt="Seta Voltar" />
+                    </BackArrow>
+                    <Title>Login</Title>
+                    <Form onSubmit={handleLogin}>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                        <Label htmlFor="password">Senha</Label>
+                        <PasswordContainer>
+                            <PasswordInput
+                                type={formData.showPassword ? 'text' : 'password'}
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                            <TogglePassword onClick={handleTogglePassword}>
+                                {formData.showPassword ? '👁️' : '👁️‍🗨️'}
+                            </TogglePassword>
+                        </PasswordContainer>
+                        <RememberMeCheckbox>
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                checked={rememberMe}
+                                onChange={handleToggleRememberMe}
+                            />
+                            <label htmlFor="rememberMe">Permanecer Logado</label>
+                        </RememberMeCheckbox>
+                        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+                        <SubmitButton type="submit" disabled={isLoading}>
+                            {isLoading ? <LoadingContainer /> : 'Logar'}
+                        </SubmitButton>
+                    </Form>
+                    <Separator>
+                        <Line />
+                        <OrText>OU</OrText>
+                        <Line />
+                    </Separator>
+                    <RegisterLink to="/register">Ainda não é usuário? Registrar-se</RegisterLink>
+                </AuthContainer>
+            </CenteredContainer>
+        </>
+    );
 };
 
 export default AuthPage;

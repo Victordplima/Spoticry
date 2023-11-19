@@ -22,21 +22,21 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function FeedPage() {
-  useEffect(() => {
-    document.title = "Feed - Spoticry";
-  }, []);
+    useEffect(() => {
+        document.title = "Feed - Spoticry";
+    }, []);
 
-  return (
-    <>
-      <GlobalStyle />
-      <Header />
-      <ListSongs />
-      <AddSongButton />
-      <RemoveSongButton />
-      <EditSongButton />
-      <ToastContainer />
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <Header />
+            <ListSongs />
+            <AddSongButton />
+            <RemoveSongButton />
+            <EditSongButton />
+            <ToastContainer />
+        </>
+    );
 }
 
 export default FeedPage;
