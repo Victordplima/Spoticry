@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
@@ -55,14 +55,16 @@ const AddSongModal = ({ closeModal }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [url, setUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem('token');
-
+  const handleAddMusic = async () => {
     try {
-      const response = await axios.post(
+      setLoading(true);
+      toast.info('Adicionando música, aguarde...');
+
+      const token = localStorage.getItem('token');
+
+      await axios.post(
         'https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/song',
         {
           title,
@@ -76,16 +78,13 @@ const AddSongModal = ({ closeModal }) => {
         }
       );
 
-      // Notificação de sucesso
       toast.success('Música adicionada com sucesso!');
-
-      console.log('Música adicionada com sucesso:', response.data);
+      console.log('Música adicionada com sucesso!');
     } catch (error) {
-      // Notificação de erro
       toast.error('Erro ao adicionar música. Tente novamente.');
-
       console.error('Erro ao adicionar música:', error);
     } finally {
+      setLoading(false);
       closeModal();
     }
   };
@@ -100,7 +99,7 @@ const AddSongModal = ({ closeModal }) => {
     <Overlay onClick={handleOverlayClick}>
       <ModalWrapper>
         <Title>Adicionar Nova Música</Title>
-        <MusicForm onSubmit={handleSubmit}>
+        <MusicForm>
           <MusicInput
             type="text"
             placeholder="Título"
@@ -122,9 +121,10 @@ const AddSongModal = ({ closeModal }) => {
             onChange={(e) => setUrl(e.target.value)}
             required
           />
-          <MusicButton type="submit">Adicionar Música</MusicButton>
+          <MusicButton type="button" onClick={handleAddMusic} disabled={loading}>
+            {loading ? 'Adicionando...' : 'Adicionar Música'}
+          </MusicButton>
         </MusicForm>
-        <ToastContainer />
       </ModalWrapper>
     </Overlay>
   );

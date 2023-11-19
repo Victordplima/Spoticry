@@ -94,18 +94,15 @@ const EditSongModal = ({ isOpen, onClose }) => {
 
     const handleEditSelected = async () => {
         try {
-            // Verifica se há uma música selecionada antes de prosseguir
             if (selectedSongId) {
                 setLoading(true);
                 toast.info('Editando música, aguarde...');
 
-                // Chama a função de edição passando o ID da música selecionada e os detalhes atualizados
                 await axios.patch(
                     `https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/song/${selectedSongId}`,
                     {
                         title: updatedDetails.updatedTitle,
                         artist: updatedDetails.updatedArtist,
-                        // Adicione outros campos, se necessário
                     },
                     {
                         headers: {
@@ -114,9 +111,7 @@ const EditSongModal = ({ isOpen, onClose }) => {
                     }
                 );
 
-                // Limpe os detalhes atualizados
                 setUpdatedDetails({});
-                // Fecha o modal
                 onClose();
                 toast.success('Música editada com sucesso!');
             }
