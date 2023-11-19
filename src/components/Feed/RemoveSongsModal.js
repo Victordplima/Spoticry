@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -90,11 +92,10 @@ const RemoveSongsModal = ({ isOpen, onRequestClose, removeSong }) => {
 
     const handleRemoveSelected = async () => {
         try {
-            // Certifique-se de que há músicas selecionadas para remover
             if (selectedSongs.length > 0) {
                 setLoading(true);
+                toast.info('Removendo música, aguarde...');
 
-                // Para cada música selecionada, envie uma solicitação DELETE
                 for (const songId of selectedSongs) {
                     await axios.delete(`https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/song/${songId}`, {
                         headers: {
@@ -103,16 +104,15 @@ const RemoveSongsModal = ({ isOpen, onRequestClose, removeSong }) => {
                     });
                 }
 
-                // Atualize a lista de músicas após a remoção
                 setSongs((prevSongs) => prevSongs.filter((song) => !selectedSongs.includes(song.id)));
-                // Limpe a seleção após remover
                 setSelectedSongs([]);
-                // Feche o modal
                 onRequestClose();
+                toast.success('Música removida com sucesso!');
             }
         } catch (error) {
             console.error('Erro ao remover músicas:', error);
             setError('Erro ao remover músicas. Tente novamente.');
+            toast.error('Erro ao remover música. Tente novamente.');
         } finally {
             setLoading(false);
         }

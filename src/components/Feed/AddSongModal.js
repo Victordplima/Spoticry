@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const Overlay = styled.div`
   position: fixed;
@@ -48,20 +51,47 @@ const Title = styled.h2`
   padding-bottom: 12px;
 `;
 
-const AddMusicModal = ({ closeModal, addMusic }) => {
+const AddSongModal = ({ closeModal }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [url, setUrl] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addMusic(title, artist, url);
-    closeModal();
+
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await axios.post(
+        'https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/song',
+        {
+          title,
+          artist,
+          url,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      // Notificação de sucesso
+      toast.success('Música adicionada com sucesso!');
+
+      console.log('Música adicionada com sucesso:', response.data);
+    } catch (error) {
+      // Notificação de erro
+      toast.error('Erro ao adicionar música. Tente novamente.');
+
+      console.error('Erro ao adicionar música:', error);
+    } finally {
+      closeModal();
+    }
   };
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-      // Se o clique ocorrer fora do modal (no overlay), feche o modal
       closeModal();
     }
   };
@@ -94,9 +124,10 @@ const AddMusicModal = ({ closeModal, addMusic }) => {
           />
           <MusicButton type="submit">Adicionar Música</MusicButton>
         </MusicForm>
+        <ToastContainer />
       </ModalWrapper>
     </Overlay>
   );
 };
 
-export default AddMusicModal;
+export default AddSongModal;

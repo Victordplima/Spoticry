@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -95,6 +97,7 @@ const EditSongModal = ({ isOpen, onClose }) => {
             // Verifica se há uma música selecionada antes de prosseguir
             if (selectedSongId) {
                 setLoading(true);
+                toast.info('Editando música, aguarde...');
 
                 // Chama a função de edição passando o ID da música selecionada e os detalhes atualizados
                 await axios.patch(
@@ -115,10 +118,12 @@ const EditSongModal = ({ isOpen, onClose }) => {
                 setUpdatedDetails({});
                 // Fecha o modal
                 onClose();
+                toast.success('Música editada com sucesso!');
             }
         } catch (error) {
             console.error('Erro ao editar música:', error);
             setError('Erro ao editar música. Tente novamente.');
+            toast.error('Erro ao editar música. Tente novamente.');
         } finally {
             setLoading(false);
         }

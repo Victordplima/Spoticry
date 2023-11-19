@@ -5,6 +5,8 @@ import AddSongButton from '../components/Feed/AddSongButton';
 import ListSongs from '../components/Feed/ListSongs';
 import RemoveSongButton from '../components/Feed/RemoveSongButton';
 import EditSongButton from '../components/Feed/EditSongButton';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -32,6 +34,7 @@ function FeedPage() {
       <AddSongButton />
       <RemoveSongButton />
       <EditSongButton />
+      <ToastContainer />
     </>
   );
 }
