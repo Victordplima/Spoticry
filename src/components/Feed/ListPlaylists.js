@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import btnDireita from '../../assets/btnDireita.png';
 import btnEsquerda from '../../assets/btnEsquerda.png';
 
-const CarouselContainer = styled.div`
+const PlaylistContainer = styled.div`
   max-width: 90%;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
 `;
 
-const CarouselHeader = styled.div`
+const PlaylistHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,12 +40,12 @@ const RightButton = styled(StyledButton)`
   margin-left: 10px;
 `;
 
-const CarouselWrapper = styled.div`
+const PlaylistWrapper = styled.div`
   display: flex;
   transition: transform 0.3s ease-in-out;
 `;
 
-const SongCard = styled.div`
+const PlaylistCard = styled.div`
   flex: 0 0 auto;
   box-sizing: border-box;
   width: 300px;
@@ -53,17 +53,22 @@ const SongCard = styled.div`
   padding: 10px;
 `;
 
-const SongImage = styled.img`
+const PlaylistImage = styled.img`
   width: 260px;
   height: 180px;
 `;
 
-const SongTitle = styled.strong`
+const PlaylistDetails = styled.div`
+  margin-top: 10px;
   color: #fff;
-  font-size: 18px;
 `;
 
-const ArtistName = styled.p`
+const PlaylistTitle = styled.strong`
+  font-size: 18px;
+  color: #fff;
+`;
+
+const PlaylistDescription = styled.p`
   color: #a9a9a9;
   font-size: 14px;
 `;
@@ -73,9 +78,8 @@ const CarouselName = styled.h2`
   font-size: 32px;
 `;
 
-
-const ListsPlaylists = () => {
-    const [musicas, setMusicas] = useState([]);
+const ListPlaylists = () => {
+    const [playlists, setPlaylists] = useState([]);
     const token = localStorage.getItem('token');
     const [carouselPosition, setCarouselPosition] = useState(0);
 
@@ -92,68 +96,61 @@ const ListsPlaylists = () => {
                         },
                     }
                 );
-                setMusicas(response.data.songs);
+
+                console.log('Dados da API de playlists:', response.data);
+
+                // Mapeia os dados para o formato desejado
+                const playlistsWithImages = response.data.playlists.map((playlist) => ({
+                    id: playlist._id,
+                    name: playlist._name,
+                    description: playlist._description,
+                    imageUrl: `https://picsum.photos/300/180?random=${Math.random()}`,
+                }));
+
+                setPlaylists(playlistsWithImages);
             } catch (error) {
-                console.error('Erro ao obter músicas:', error);
+                console.error('Erro ao obter playlists:', error);
             }
         };
 
         fetchData();
     }, [token]);
 
-
-    const getYouTubeVideoId = (url) => {
-        // não tire o comentario abaixo
-        // eslint-disable-next-line no-useless-escape
-        const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
-        return match ? match[1] : null;
-    };
-
-    const getYouTubeThumbnail = (url) => {
-        const videoId = getYouTubeVideoId(url);
-
-        if (videoId) {
-            return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-        }
-
-        return 'https://via.placeholder.com/150';
-    };
-
-
     const scrollCarousel = (direction) => {
         const newPosition = direction === 'next' ? carouselPosition + cardWidth : carouselPosition - cardWidth;
 
-        if (newPosition >= 0 && newPosition <= cardWidth * (musicas.length - 3)) {
+        if (newPosition >= 0 && newPosition <= cardWidth * (playlists.length - 3)) {
             setCarouselPosition(newPosition);
         }
     };
 
     return (
-        <CarouselContainer>
-            <CarouselHeader>
-                <CarouselName>🔥 Em alta</CarouselName>
+        <PlaylistContainer>
+            <PlaylistHeader>
+                <CarouselName>🎵 Playlists</CarouselName>
                 <ControlsContainer>
                     <LeftButton onClick={() => scrollCarousel('prev')} disabled={carouselPosition === 0}>
                         <img src={btnEsquerda} alt="Seta para a esquerda" />
                     </LeftButton>
-                    <RightButton onClick={() => scrollCarousel('next')} disabled={carouselPosition >= cardWidth * (musicas.length - 3)}>
+                    <RightButton onClick={() => scrollCarousel('next')} disabled={carouselPosition >= cardWidth * (playlists.length - 3)}>
                         <img src={btnDireita} alt="Seta para a direita" />
                     </RightButton>
                 </ControlsContainer>
-            </CarouselHeader>
-            <CarouselWrapper style={{ transform: `translateX(-${carouselPosition}px)` }}>
-                {musicas.map((musica) => (
-                    <SongCard key={musica.id}>
-                        <SongImage src={getYouTubeThumbnail(musica.url)} alt="Thumbnail" />
-                        <div>
-                            <SongTitle>{musica.title}</SongTitle>
-                            <ArtistName>{musica.artist}</ArtistName>
-                        </div>
-                    </SongCard>
+            </PlaylistHeader>
+            <PlaylistWrapper style={{ transform: `translateX(-${carouselPosition}px)` }}>
+                {playlists.map((playlist) => (
+                    <PlaylistCard key={playlist.id}>
+                        <PlaylistImage src={playlist.imageUrl} alt="Playlist" />
+                        <PlaylistDetails>
+                            <PlaylistTitle>{playlist.name}</PlaylistTitle>
+                            <PlaylistDescription>{playlist.description}</PlaylistDescription>
+                            {/* Adicione outros detalhes da playlist conforme necessário */}
+                        </PlaylistDetails>
+                    </PlaylistCard>
                 ))}
-            </CarouselWrapper>
-        </CarouselContainer>
+            </PlaylistWrapper>
+        </PlaylistContainer>
     );
 };
 
-export default ListsPlaylists;
+export default ListPlaylists;

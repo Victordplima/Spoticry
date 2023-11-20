@@ -5,6 +5,7 @@ import ListSongs from '../components/Feed/ListSongs';
 //import ListsPlaylists from '../components/Feed/ListPlaylists';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ListPlaylists from '../components/Feed/ListPlaylists';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -28,7 +29,9 @@ function FeedPage() {
         <>
             <GlobalStyle />
             <Header />
+            <ListPlaylists />
             <ListSongs />
+            
             <ToastContainer />
         </>
     );
