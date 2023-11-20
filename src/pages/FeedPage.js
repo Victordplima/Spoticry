@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
-import AddSongButton from '../components/ManageMusic/AddSongButton';
 import ListSongs from '../components/Feed/ListSongs';
-import RemoveSongButton from '../components/ManageMusic/RemoveSongButton';
-import EditSongButton from '../components/ManageMusic/EditSongButton';
+//import ListsPlaylists from '../components/Feed/ListPlaylists';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -31,9 +29,6 @@ function FeedPage() {
             <GlobalStyle />
             <Header />
             <ListSongs />
-            <AddSongButton />
-            <RemoveSongButton />
-            <EditSongButton />
             <ToastContainer />
         </>
     );

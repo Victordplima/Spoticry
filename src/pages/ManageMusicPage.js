@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
-import AddSongButton from '../components/ManageMusic/AddSongButton';
-import RemoveSongButton from '../components/ManageMusic/RemoveSongButton';
-import EditSongButton from '../components/ManageMusic/EditSongButton';
+import AddSongButton from '../components/ManageMusic/Song/AddSongButton';
+import RemoveSongButton from '../components/ManageMusic/Song/RemoveSongButton';
+import EditSongButton from '../components/ManageMusic/Song/EditSongButton';
+//Playlists
+import AddPlaylistButton from '../components/ManageMusic/Playlist/AddPlaylistButton';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,6 +36,7 @@ function ManageMusicPage() {
             <RemoveSongButton />
             <EditSongButton />
             <h2>Playlists</h2>
+            <AddPlaylistButton />
             <ToastContainer />
         </>
     );
