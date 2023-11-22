@@ -1,8 +1,7 @@
-// AddPlaylistModal.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { toast } from 'react-toastify';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Overlay = styled.div`
   position: fixed;
@@ -62,6 +61,26 @@ const AddPlaylistModal = ({ closeModal }) => {
     const [playlistName, setPlaylistName] = useState('');
     const [playlistDescription, setPlaylistDescription] = useState('');
     const [loading, setLoading] = useState(false);
+    const [availableSongs, setAvailableSongs] = useState([]);
+    const [selectedSongs, setSelectedSongs] = useState([]);
+
+    useEffect(() => {
+        const fetchSongs = async () => {
+            try {
+                const response = await axios.get('https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/song', {
+                    headers: {
+                        Authorization: localStorage.getItem('token'),
+                    },
+                });
+                setAvailableSongs(response.data.songs);
+            } catch (error) {
+                console.error('Erro ao obter músicas:', error);
+                toast.error('Erro ao carregar músicas. Tente novamente.');
+            }
+        };
+
+        fetchSongs();
+    }, []);
 
     const handleAddPlaylist = async () => {
         try {
@@ -72,8 +91,8 @@ const AddPlaylistModal = ({ closeModal }) => {
 
             const playlistData = {
                 name: playlistName,
-                description: playlistDescription, // A descrição é opcional, pode remover se não for necessário
-                // Adicione outros campos conforme necessário
+                description: playlistDescription,
+                songs: selectedSongs, // Adiciona as músicas selecionadas à playlist
             };
 
             await axios.post(
@@ -103,6 +122,16 @@ const AddPlaylistModal = ({ closeModal }) => {
         }
     };
 
+    const handleSongToggle = (songId) => {
+        setSelectedSongs((prevSelectedSongs) => {
+            if (prevSelectedSongs.includes(songId)) {
+                return prevSelectedSongs.filter((id) => id !== songId);
+            } else {
+                return [...prevSelectedSongs, songId];
+            }
+        });
+    };
+
     return (
         <Overlay onClick={handleOverlayClick}>
             <ModalWrapper>
@@ -120,6 +149,17 @@ const AddPlaylistModal = ({ closeModal }) => {
                         value={playlistDescription}
                         onChange={(e) => setPlaylistDescription(e.target.value)}
                     />
+                    <h3>Músicas Disponíveis:</h3>
+                    {availableSongs.map((song) => (
+                        <div key={song.id}>
+                            <input
+                                type="checkbox"
+                                checked={selectedSongs.includes(song.id)}
+                                onChange={() => handleSongToggle(song.id)}
+                            />
+                            {song.title} - {song.artist}
+                        </div>
+                    ))}
                     <PlaylistButton type="button" onClick={handleAddPlaylist} disabled={loading}>
                         {loading ? 'Adicionando...' : 'Adicionar Playlist'}
                     </PlaylistButton>
