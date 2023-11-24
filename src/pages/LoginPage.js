@@ -27,22 +27,18 @@ const GlobalStyle = createGlobalStyle`
 const LoginPageContainer = styled.div`
   display: flex;
   height: 100vh;
+  overflow: hidden; /* Adicionado para evitar a barra de rolagem vertical */
 `;
 
 const Background = styled.div`
   flex: 1;
-  max-width: 50%;
+  width: 100%;
+  height: 100%; /* Alteração para ocupar toda a altura da tela */
   background-image: url(${loginBackground});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  animation: rotateHue 10s infinite; /* Adicione a animação aqui */
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    height: 100vh;
-    order: -1;
-  }
+  animation: rotateHue 10s infinite;
 
   @keyframes rotateHue {
     100% {
@@ -54,12 +50,17 @@ const Background = styled.div`
 const AuthContainer = styled.div`
   flex: 1;
   max-width: 400px;
+  width: 70%;
   margin: auto;
   padding: 20px;
-  background-color: #000000;
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px);
   box-shadow: 0 0 20px rgba(3, 125, 250, 0.8);
-  position: relative; /* Adicionado para que os elementos filhos usem position: absolute; em relação a este contêiner */
 `;
 
 const Title = styled.h2`
