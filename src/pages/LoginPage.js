@@ -6,9 +6,13 @@ import { createGlobalStyle } from 'styled-components';
 import setaVoltar from '../assets/btnVoltar.png';
 import axios from 'axios';
 import loadingGif from '../assets/loading.gif';
+import loginBackground from '../assets/loginBackground.jpg'
+import showPasswordOn from '../assets/showPasswordOn.png'
+import showPasswordOff from '../assets/showPasswordOff.png'
 
 const GlobalStyle = createGlobalStyle`
   * {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,23 +24,42 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const CenteredContainer = styled.div`
+const LoginPageContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
-  width: 100%;
-  box-sizing: border-box;
+`;
+
+const Background = styled.div`
+  flex: 1;
+  max-width: 50%;
+  background-image: url(${loginBackground});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: rotateHue 10s infinite; /* Adicione a animação aqui */
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    height: 100vh;
+    order: -1;
+  }
+
+  @keyframes rotateHue {
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
 `;
 
 const AuthContainer = styled.div`
-  width: 80%;
+  flex: 1;
   max-width: 400px;
-  margin: 0 auto;
+  margin: auto;
   padding: 20px;
-  background-color: #212121;
+  background-color: #000000;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(3, 125, 250, 0.8);
+  position: relative; /* Adicionado para que os elementos filhos usem position: absolute; em relação a este contêiner */
 `;
 
 const Title = styled.h2`
@@ -52,28 +75,35 @@ const Form = styled.form`
 
 const Label = styled.label`
   font-size: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 4px; /* Diminui o espaçamento inferior para ficar mais próximo do input */
+  color: #fff;
 `;
 
 const Input = styled.input`
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: none;
+  border-bottom: 1px solid #ccc;
   margin-bottom: 16px;
+  background-color: transparent;
+  outline: none;
+  color: #fff;
 `;
 
 const PasswordContainer = styled.div`
   position: relative;
+  margin-bottom: 16px; /* Aumenta o espaçamento inferior para separar do próximo input */
 `;
 
 const PasswordInput = styled.input`
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 16px;
+  border: none;
+  border-bottom: 1px solid #ccc;
   width: calc(100% - 30px);
+  background-color: transparent;
+  outline: none;
+  color: #fff;
 `;
 
 const TogglePassword = styled.span`
@@ -82,6 +112,16 @@ const TogglePassword = styled.span`
   right: 5px;
   transform: translateY(-50%);
   cursor: pointer;
+  display: flex; /* Para centralizar a imagem verticalmente */
+  align-items: center;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #ccc;
+`;
+
+const EyeIcon = styled.img`
+  width: 20px; /* Tamanho desejado para os ícones dos olhos */
+  height: auto;
+  margin-left: 5px; /* Espaçamento entre o ícone e o texto */
 `;
 
 const SubmitButton = styled.button`
@@ -90,7 +130,7 @@ const SubmitButton = styled.button`
   border: none;
   padding: 10px 20px;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 18px;
   cursor: pointer;
   margin-top: 20px;
 `;
@@ -109,6 +149,8 @@ const BackArrow = styled(Link)`
   top: 20px;
   left: 20px;
   cursor: pointer;
+  width: 24px;
+  height: 24px;
 `;
 
 const Separator = styled.div`
@@ -116,7 +158,7 @@ const Separator = styled.div`
   align-items: center;
   text-align: center;
   margin: 20px 0;
-  margin-top: 50px;
+  margin-top: 20px;
 `;
 
 const Line = styled.div`
@@ -157,8 +199,15 @@ const LoadingContainer = styled.div`
   background-size: cover;
 `;
 
+const ForgotPasswordText = styled.div`
+  padding-top: 10px;
+  color: #777;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+`;
 
-const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
+const LoginPage = ({ title, buttonText, linkText, linkTo }) => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -178,7 +227,7 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
     };
 
     const handleToggleRememberMe = () => {
-        setRememberMe(prevState => !prevState);
+        setRememberMe((prevState) => !prevState);
     };
 
     const handleTogglePassword = () => {
@@ -203,11 +252,10 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
                 }
             );
 
-            localStorage.setItem('token', response.data.token); // Armazenar o token no localStorage
+            localStorage.setItem('token', response.data.token);
             console.log('Token:', response.data.token);
             console.log('Login bem sucedido:', response.data);
 
-            // Redirecionar para a página de feed
             navigate('/feed');
         } catch (error) {
             setIsLoading(false);
@@ -223,10 +271,11 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
     return (
         <>
             <GlobalStyle />
-            <CenteredContainer>
+            <LoginPageContainer>
+                <Background />
                 <AuthContainer>
                     <BackArrow to="/">
-                        <img src={setaVoltar} alt="Seta Voltar" />
+                        <img src={setaVoltar} alt="Seta Voltar" style={{ width: '100%', height: '100%' }} />
                     </BackArrow>
                     <Title>Login</Title>
                     <Form onSubmit={handleLogin}>
@@ -250,7 +299,11 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
                                 required
                             />
                             <TogglePassword onClick={handleTogglePassword}>
-                                {formData.showPassword ? '👁️' : '👁️‍🗨️'}
+                                {formData.showPassword ? (
+                                    <EyeIcon src={showPasswordOn} alt="Mostrar Senha" />
+                                ) : (
+                                    <EyeIcon src={showPasswordOff} alt="Esconder Senha" />
+                                )}
                             </TogglePassword>
                         </PasswordContainer>
                         <RememberMeCheckbox>
@@ -267,6 +320,7 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
                             {isLoading ? <LoadingContainer /> : 'Logar'}
                         </SubmitButton>
                     </Form>
+                    <ForgotPasswordText> Esqueci minha senha </ForgotPasswordText>
                     <Separator>
                         <Line />
                         <OrText>OU</OrText>
@@ -274,9 +328,9 @@ const AuthPage = ({ title, buttonText, linkText, linkTo }) => {
                     </Separator>
                     <RegisterLink to="/register">Ainda não é usuário? Registrar-se</RegisterLink>
                 </AuthContainer>
-            </CenteredContainer>
+            </LoginPageContainer>
         </>
     );
 };
 
-export default AuthPage;
+export default LoginPage;
