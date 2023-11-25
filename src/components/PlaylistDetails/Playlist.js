@@ -6,6 +6,7 @@ const PlaylistContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  padding: 20px 0px;
 
   @media (min-width: 768px) {
     margin: 0% 15%;
