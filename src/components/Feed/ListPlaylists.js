@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import btnDireita from '../../assets/btnDireita.png';
@@ -66,11 +67,13 @@ const PlaylistDetails = styled.div`
 const PlaylistTitle = styled.strong`
   font-size: 18px;
   color: #fff;
+  text-decoration: none;
 `;
 
 const PlaylistDescription = styled.p`
   color: #a9a9a9;
   font-size: 14px;
+  text-decoration: none;
 `;
 
 const CarouselName = styled.h2`
@@ -132,7 +135,10 @@ const ListPlaylists = () => {
                     <LeftButton onClick={() => scrollCarousel('prev')} disabled={carouselPosition === 0}>
                         <img src={btnEsquerda} alt="Seta para a esquerda" />
                     </LeftButton>
-                    <RightButton onClick={() => scrollCarousel('next')} disabled={carouselPosition >= cardWidth * (playlists.length - 3)}>
+                    <RightButton
+                        onClick={() => scrollCarousel('next')}
+                        disabled={carouselPosition >= cardWidth * (playlists.length - 3)}
+                    >
                         <img src={btnDireita} alt="Seta para a direita" />
                     </RightButton>
                 </ControlsContainer>
@@ -140,12 +146,14 @@ const ListPlaylists = () => {
             <PlaylistWrapper style={{ transform: `translateX(-${carouselPosition}px)` }}>
                 {playlists.map((playlist) => (
                     <PlaylistCard key={playlist.id}>
-                        <PlaylistImage src={playlist.imageUrl} alt="Playlist" />
-                        <PlaylistDetails>
-                            <PlaylistTitle>{playlist.name}</PlaylistTitle>
-                            <PlaylistDescription>{playlist.description}</PlaylistDescription>
-                            {/* Adicione outros detalhes da playlist conforme necessário */}
-                        </PlaylistDetails>
+                        {/* Adicione o style diretamente no componente Link */}
+                        <Link to={`/playlist/${playlist.id}`} style={{ textDecoration: 'none' }}>
+                            <PlaylistImage src={playlist.imageUrl} alt="Playlist" />
+                            <PlaylistDetails>
+                                <PlaylistTitle>{playlist.name}</PlaylistTitle>
+                                <PlaylistDescription>{playlist.description}</PlaylistDescription>
+                            </PlaylistDetails>
+                        </Link>
                     </PlaylistCard>
                 ))}
             </PlaylistWrapper>

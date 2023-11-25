@@ -27,13 +27,13 @@ const GlobalStyle = createGlobalStyle`
 const LoginPageContainer = styled.div`
   display: flex;
   height: 100vh;
-  overflow: hidden; /* Adicionado para evitar a barra de rolagem vertical */
+  overflow: hidden;
 `;
 
 const Background = styled.div`
   flex: 1;
   width: 100%;
-  height: 100%; /* Alteração para ocupar toda a altura da tela */
+  height: 100%;
   background-image: url(${loginBackground});
   background-size: cover;
   background-position: center;
@@ -76,7 +76,7 @@ const Form = styled.form`
 
 const Label = styled.label`
   font-size: 16px;
-  margin-bottom: 4px; /* Diminui o espaçamento inferior para ficar mais próximo do input */
+  margin-bottom: 4px;
   color: #fff;
 `;
 
@@ -93,7 +93,7 @@ const Input = styled.input`
 
 const PasswordContainer = styled.div`
   position: relative;
-  margin-bottom: 16px; /* Aumenta o espaçamento inferior para separar do próximo input */
+  margin-bottom: 16px;
 `;
 
 const PasswordInput = styled.input`
@@ -113,16 +113,16 @@ const TogglePassword = styled.span`
   right: 5px;
   transform: translateY(-50%);
   cursor: pointer;
-  display: flex; /* Para centralizar a imagem verticalmente */
+  display: flex;
   align-items: center;
   padding-bottom: 19px;
   border-bottom: 1px solid #ccc;
 `;
 
 const EyeIcon = styled.img`
-  width: 20px; /* Tamanho desejado para os ícones dos olhos */
+  width: 20px;
   height: auto;
-  margin-left: 5px; /* Espaçamento entre o ícone e o texto */
+  margin-left: 5px;
 `;
 
 const SubmitButton = styled.button`
