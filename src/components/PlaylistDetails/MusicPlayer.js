@@ -114,7 +114,7 @@ const VolumeSlider = styled.input`
 const MusicPlayer = () => {
     const { currentSong } = useMusic();
     const [isPlaying, setIsPlaying] = useState(false);
-    const [volume, setVolume] = useState(0.8);
+    const [volume, setVolume] = useState(0.5);
     const [played, setPlayed] = useState(0);
     const [duration, setDuration] = useState(0);
     const playerRef = useRef(null);
@@ -122,7 +122,7 @@ const MusicPlayer = () => {
     useEffect(() => {
         if (currentSong) {
             setIsPlaying(true);
-            setVolume(0.8);
+            setVolume(0.5);
             setPlayed(0);
         } else {
             setIsPlaying(false);
