@@ -7,7 +7,7 @@ const SongContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  border-bottom: 1px groove #fff;
+  border-bottom: 1px groove #292929;
   margin-top: 10px;
 
   @media (min-width: 768px) {
