@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from '../components/Feed/Header'
 import ListSongs from '../components/Feed/ListSongs';
-//import ListsPlaylists from '../components/Feed/ListPlaylists';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ListPlaylists from '../components/Feed/ListPlaylists';
+import FeaturedSong from '../components/Feed/FeaturedSong';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -42,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function FeedPage() {
+
     useEffect(() => {
         document.title = "Feed - Spoticry";
     }, []);
@@ -50,6 +51,7 @@ function FeedPage() {
         <>
             <GlobalStyle />
             <Header />
+            <FeaturedSong />
             <ListPlaylists />
             <ListSongs />
             
