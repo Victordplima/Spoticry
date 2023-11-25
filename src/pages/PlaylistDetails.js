@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoadingImage from '../assets/loading.gif';
 import Playlist from '../components/PlaylistDetails/Playlist'
 import Song from '../components/PlaylistDetails/Song'
+import MusicPlayer from '../components/PlaylistDetails/MusicPlayer';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -135,6 +136,7 @@ function PlaylistDetail() {
                     </div>
                 )
             )}
+            <MusicPlayer />
         </>
     );
 }

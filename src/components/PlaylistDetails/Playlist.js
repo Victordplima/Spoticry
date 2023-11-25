@@ -31,6 +31,7 @@ const PlaylistName = styled.h1`
 
 const PlaylistDescription = styled.p`
   font-size: 1em;
+  color: #a9a9a9;
 `;
 
 const Playlist = ({ name, description }) => (

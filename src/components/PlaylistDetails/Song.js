@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import btnPlay from '../../assets/btnPlay2.png'
-import btnTresPontos from '../../assets/btnTresPontos.png'
+import btnPlay from '../../assets/btnPlay2.png';
+import btnTresPontos from '../../assets/btnTresPontos.png';
+import { useMusic } from '../../MusicContext';
 
 const SongContainer = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ const SongTitle = styled.h2`
 
 const SongArtist = styled.p`
   font-size: 1em;
+  color: #a9a9a9;
 `;
 
 const ControlsContainer = styled.div`
@@ -71,18 +73,23 @@ const MoreButtonIcon = styled.img`
   height: 24px; /* Ajuste o tamanho conforme necessário */
 `;
 
-
 const Song = ({ title, artist, url }) => {
+  const { playSong } = useMusic();
+
+  const playThisSong = () => {
+    playSong({ title, artist, url });
+  };
 
   const getYouTubeVideoId = (url) => {
-    // não tire o comentario abaixo
-    // eslint-disable-next-line no-useless-escape
-    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
+    const match = url.match(
+      // não tire o comentario abaixo
+      // eslint-disable-next-line no-useless-escape
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+    );
     return match ? match[1] : null;
   };
 
   const getYouTubeThumbnail = (url) => {
-    console.log("URL:", url)
     if (!url) {
       return 'https://via.placeholder.com/150';
     }
@@ -96,7 +103,6 @@ const Song = ({ title, artist, url }) => {
     return 'https://via.placeholder.com/150';
   };
 
-
   return (
     <SongContainer>
       <SongImage src={getYouTubeThumbnail(url)} alt="Thumbnail" />
@@ -105,8 +111,12 @@ const Song = ({ title, artist, url }) => {
         <SongArtist>{artist}</SongArtist>
       </SongInfo>
       <ControlsContainer>
-        <PlayButton> <PlayButtonIcon src={btnPlay} alt="Play" /> </PlayButton>
-        <MoreButton> <MoreButtonIcon src={btnTresPontos} alt="Mais" /> </MoreButton>
+        <PlayButton onClick={playThisSong}>
+          <PlayButtonIcon src={btnPlay} alt="Play" />
+        </PlayButton>
+        <MoreButton>
+          <MoreButtonIcon src={btnTresPontos} alt="Mais" />
+        </MoreButton>
       </ControlsContainer>
     </SongContainer>
   );
