@@ -43,17 +43,17 @@ const FeaturedSongContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;  // Adicione essa propriedade z-index para garantir que fique no fundo
+    z-index: -1;
   }
 
   &::before {
     background: inherit;
-    filter: blur(50px);  // Ajuste o valor do desfoque conforme necessário
+    filter: blur(100%);
   }
 
   &::after {
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-    mix-blend-mode: multiply;  // Use a mistura de modos conforme necessário para o efeito desejado
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
+    mix-blend-mode: multiply; 
   }
 `;
 
@@ -78,9 +78,9 @@ const FullBackgroundStyle = styled.div`
 const FeaturedSongWrapper = styled.div`
   display: flex;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7); /* Cor de fundo com opacidade */
-  border-radius: 10px; /* Borda arredondada para um efeito mais suave */
-  backdrop-filter: blur(10px); /* Desfoque aplicado ao plano de fundo */
+  //background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
   padding: 15px 15px;
 `;
 

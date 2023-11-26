@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';  // Importa NavLink do react-router-dom
 import btnMenu from '../../assets/btnMenu.png';
 import searchIcon from '../../assets/lupa.png';
 import logo from '../../assets/logo.png';
@@ -17,7 +18,6 @@ const HeaderContainer = styled.header`
   height: 80px;
 `;
 
-
 const MenuButton = styled.div`
   background-image: url(${btnMenu});
   background-size: cover;
@@ -26,7 +26,8 @@ const MenuButton = styled.div`
   cursor: pointer;
 `;
 
-const Logo = styled.div`
+// Use NavLink para tornar o logo um link
+const Logo = styled(NavLink)`
   background-image: url(${logo});
   background-size: contain;
   background-repeat: no-repeat;
@@ -68,29 +69,30 @@ const UserImage = styled.img`
 `;
 
 const Header = () => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    };
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
-    return (
-        <>
-            <HeaderContainer>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <MenuButton onClick={toggleSidebar} />
-                    <Logo />
-                </div>
-                <SearchContainer>
-                    <SearchInput type="text" placeholder="Pesquisa" />
-                </SearchContainer>
-                <UserInfo>
-                    <UserImage src={user} alt="Usuário" />
-                </UserInfo>
-            </HeaderContainer>
-            <Sidebar isOpen={isOpen} />
-        </>
-    );
+  return (
+    <>
+      <HeaderContainer>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <MenuButton onClick={toggleSidebar} />
+          {/* Use o NavLink aqui para fazer o logo um link */}
+          <Logo to="/feed" />
+        </div>
+        <SearchContainer>
+          <SearchInput type="text" placeholder="Pesquisa" />
+        </SearchContainer>
+        <UserInfo>
+          <UserImage src={user} alt="Usuário" />
+        </UserInfo>
+      </HeaderContainer>
+      <Sidebar isOpen={isOpen} />
+    </>
+  );
 };
 
 export default Header;
