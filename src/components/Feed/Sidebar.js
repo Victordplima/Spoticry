@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import btnHome from '../../assets/btnHome.png';
 import btnUpgrade from '../../assets/btnUpgrade.png';
 import btnGerenciador from '../../assets/btnGerenciador.png';
+import AddSongButton from '../ManageMusic/Song/AddSongButton';
+import AddPlaylistButton from '../ManageMusic/Playlist/AddPlaylistButton';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const SidebarContainer = styled.div`
@@ -49,6 +51,20 @@ const NavLinkButton = styled(NavLink)`
   color: inherit;
 `;
 
+const Separator = styled.div`
+  width: 80%;
+  height: 1px;
+  background-color: #555;
+  margin: 10px auto;
+`;
+
+const BottomButtonsContainer = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+
 const Sidebar = ({ isOpen }) => {
     const location = useLocation();
 
@@ -85,6 +101,11 @@ const Sidebar = ({ isOpen }) => {
                     <ButtonText>Upgrade</ButtonText>
                 </SidebarButton>
             </NavLinkButton>
+            <Separator />
+            <BottomButtonsContainer>
+                <AddSongButton />
+                <AddPlaylistButton />
+            </BottomButtonsContainer>
         </SidebarContainer>
     );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Feed/Header';
@@ -41,6 +42,28 @@ const GlobalStyle = createGlobalStyle`
     scrollbar-width: thin;
     scrollbar-color: #212121 #000000;
   }
+`;
+
+const CustomScrollbarDivStyle = styled.div`
+  max-Height: 400px;
+  overflow-Y: auto;
+  /* Personalização do scrollbar para navegadores WebKit (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #212121;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #000000;
+  }
+
+  /* Personalização do scrollbar para navegadores mais recentes */
+  scrollbar-width: thin;
+  scrollbar-color: #212121 #000000;
+  
 `;
 
 function PlaylistDetail() {
@@ -124,15 +147,16 @@ function PlaylistDetail() {
                 playlist && (
                     <div>
                         <Playlist name={playlist._name} description={playlist._description} />
-
-                        <ul>
-                            {Array.isArray(songs) &&
-                                songs.map((song) => (
-                                    <li key={song.id}>
-                                        <Song title={song.title} artist={song.artist} url={song.url} />
-                                    </li>
-                                ))}
-                        </ul>
+                        <CustomScrollbarDivStyle>
+                            <ul>
+                                {Array.isArray(songs) &&
+                                    songs.map((song) => (
+                                        <li key={song.id}>
+                                            <Song title={song.title} artist={song.artist} url={song.url} />
+                                        </li>
+                                    ))}
+                            </ul>
+                        </CustomScrollbarDivStyle>
                     </div>
                 )
             )}

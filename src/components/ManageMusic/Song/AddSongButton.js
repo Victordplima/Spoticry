@@ -1,5 +1,45 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import AddSongModal from './AddSongModal';
+import btnAdicionar from '../../../assets/btnAdicionar.png';
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+  font-family: 'Roboto', sans-serif;
+`;
+
+const CustomButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #212121;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  height: 45px;
+
+  &:hover {
+    background-color: #333;
+  }
+`;
+
+const ButtonImage = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+`;
+
+const ButtonText = styled.span`
+  font-weight: bold;
+  font-size: 15px;
+`;
 
 const AddSongButton = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,10 +53,13 @@ const AddSongButton = () => {
     };
 
     return (
-        <div>
-            <button onClick={openModal}>Adicionar Nova Música</button>
+        <Container>
+            <CustomButton onClick={openModal}>
+                <ButtonImage src={btnAdicionar} alt="Ícone do Botão" />
+                <ButtonText>Nova Música</ButtonText>
+            </CustomButton>
             {isModalOpen && <AddSongModal closeModal={closeModal} />}
-        </div>
+        </Container>
     );
 };
 

@@ -1,61 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import btnDireita from '../../assets/btnDireita.png';
-import btnEsquerda from '../../assets/btnEsquerda.png';
 
-const CarouselContainer = styled.div`
+const SongGridContainer = styled.div`
   max-width: 90%;
   margin: 0 auto;
   overflow: hidden;
-  position: relative;
+  padding-top: 50px;
 `;
 
-const CarouselHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-`;
-
-const ControlsContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const StyledButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  img {
-    max-width: 30px;
-  }
-`;
-
-const LeftButton = styled(StyledButton)`
-  margin-right: 0px;
-`;
-
-const RightButton = styled(StyledButton)`
-  margin-left: 10px;
-`;
-
-const CarouselWrapper = styled.div`
-  display: flex;
-  transition: transform 0.3s ease-in-out;
+const SongGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 `;
 
 const SongCard = styled.div`
-  flex: 0 0 auto;
   box-sizing: border-box;
-  width: 300px;
-  margin-right: 20px;
   padding: 10px;
+  background-color: #0000;
 `;
 
 const SongImage = styled.img`
-  width: 260px;
+  width: 280px;
   height: 180px;
+  object-fit: cover;
 `;
 
 const SongTitle = styled.strong`
@@ -68,18 +37,16 @@ const ArtistName = styled.p`
   font-size: 14px;
 `;
 
-const CarouselName = styled.h2`
+const Name = styled.h2`
   color: white;
   font-size: 32px;
+  padding-left: 10px;
 `;
 
 
 const ListSongs = () => {
     const [musicas, setMusicas] = useState([]);
     const token = localStorage.getItem('token');
-    const [carouselPosition, setCarouselPosition] = useState(0);
-
-    const cardWidth = 320;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -101,11 +68,12 @@ const ListSongs = () => {
         fetchData();
     }, [token]);
 
-
     const getYouTubeVideoId = (url) => {
-        // não tire o comentario abaixo
-        // eslint-disable-next-line no-useless-escape
-        const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
+        const match = url.match(
+            // não tire o comentario abaixo
+            // eslint-disable-next-line no-useless-escape
+            /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+        );
         return match ? match[1] : null;
     };
 
@@ -119,29 +87,10 @@ const ListSongs = () => {
         return 'https://via.placeholder.com/150';
     };
 
-
-    const scrollCarousel = (direction) => {
-        const newPosition = direction === 'next' ? carouselPosition + cardWidth : carouselPosition - cardWidth;
-
-        if (newPosition >= 0 && newPosition <= cardWidth * (musicas.length - 3)) {
-            setCarouselPosition(newPosition);
-        }
-    };
-
     return (
-        <CarouselContainer>
-            <CarouselHeader>
-                <CarouselName>🔥 Em alta</CarouselName>
-                <ControlsContainer>
-                    <LeftButton onClick={() => scrollCarousel('prev')} disabled={carouselPosition === 0}>
-                        <img src={btnEsquerda} alt="Seta para a esquerda" />
-                    </LeftButton>
-                    <RightButton onClick={() => scrollCarousel('next')} disabled={carouselPosition >= cardWidth * (musicas.length - 3)}>
-                        <img src={btnDireita} alt="Seta para a direita" />
-                    </RightButton>
-                </ControlsContainer>
-            </CarouselHeader>
-            <CarouselWrapper style={{ transform: `translateX(-${carouselPosition}px)` }}>
+        <SongGridContainer>
+            <Name> 🔥 Músicas </Name>
+            <SongGrid>
                 {musicas.map((musica) => (
                     <SongCard key={musica.id}>
                         <SongImage src={getYouTubeThumbnail(musica.url)} alt="Thumbnail" />
@@ -151,8 +100,8 @@ const ListSongs = () => {
                         </div>
                     </SongCard>
                 ))}
-            </CarouselWrapper>
-        </CarouselContainer>
+            </SongGrid>
+        </SongGridContainer>
     );
 };
 

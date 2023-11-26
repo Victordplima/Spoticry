@@ -3,6 +3,40 @@ import styled from 'styled-components';
 import btnPlay from '../../assets/btnPlay2.png';
 import btnTresPontos from '../../assets/btnTresPontos.png';
 import { useMusic } from '../../MusicContext';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #000000;
+    color: #fff;
+  }
+
+  /* Personalização do scrollbar para navegadores WebKit (Chrome, Safari) */
+  body::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: #212121;
+  }
+
+  body::-webkit-scrollbar-track {
+    background-color: #000000;
+  }
+
+  /* Personalização do scrollbar para navegadores mais recentes */
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: #212121 #000000;
+  }
+`;
 
 const SongContainer = styled.div`
   display: flex;
@@ -105,6 +139,7 @@ const Song = ({ title, artist, url }) => {
 
   return (
     <SongContainer>
+      <GlobalStyle />
       <SongImage src={getYouTubeThumbnail(url)} alt="Thumbnail" />
       <SongInfo>
         <SongTitle>{title}</SongTitle>
