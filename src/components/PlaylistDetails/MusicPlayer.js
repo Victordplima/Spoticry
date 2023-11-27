@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 import btnPlay from '../../assets/btnPlay.png';
+import btnPause from '../../assets/btnPause.png';
 import btnPrevious from '../../assets/btnAnterior.png';
 import btnNext from '../../assets/btnProximo.png';
 import volumeIcon from '../../assets/btnVolume.png';
@@ -135,6 +136,13 @@ const MusicPlayer = () => {
         setIsPlaying(!isPlaying);
     };
 
+    const handleReady = () => {
+        if (currentSong) {
+            playerRef.current.seekTo(0);
+        }
+    };
+
+
     const handleVolumeChange = (e) => {
         setVolume(parseFloat(e.target.value));
     };
@@ -169,7 +177,10 @@ const MusicPlayer = () => {
                     <PreviousButtonIcon src={btnPrevious} alt="Previous" />
                 </PreviousButton>
                 <PlayButton onClick={handlePlayPause}>
-                    <PlayButtonIcon src={btnPlay} alt={isPlaying ? 'Pause' : 'Play'} />
+                    <PlayButtonIcon
+                        src={isPlaying ? btnPause : btnPlay}
+                        alt={isPlaying ? 'Pause' : 'Play'}
+                    />
                 </PlayButton>
                 <NextButton onClick={() => console.log('Next')}>
                     <NextButtonIcon src={btnNext} alt="Next" />
@@ -209,6 +220,8 @@ const MusicPlayer = () => {
                 volume={volume}
                 onProgress={handleProgress}
                 onDuration={handleDuration}
+                onReady={handleReady}
+                config={{ youtube: { playerVars: { start: 0 } } }}
                 ref={playerRef}
                 width="0"
                 height="0"

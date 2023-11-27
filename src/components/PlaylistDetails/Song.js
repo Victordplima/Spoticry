@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import btnPlay from '../../assets/btnPlay2.png';
+import btnPause from '../../assets/btnPause.png';
 import btnTresPontos from '../../assets/btnTresPontos.png';
 import { useMusic } from '../../MusicContext';
 import { createGlobalStyle } from 'styled-components';
@@ -44,6 +45,7 @@ const SongContainer = styled.div`
   margin-bottom: 20px;
   border-bottom: 1px groove #292929;
   margin-top: 10px;
+  background-color: ${(props) => (props.isPlaying ? '#212121' : 'transparent')};
 
   @media (min-width: 768px) {
     margin: 0% 15%;
@@ -108,53 +110,55 @@ const MoreButtonIcon = styled.img`
 `;
 
 const Song = ({ title, artist, url }) => {
-  const { playSong } = useMusic();
+    const { currentSong, playSong } = useMusic();
 
-  const playThisSong = () => {
-    playSong({ title, artist, url });
-  };
+    const isPlaying = currentSong && currentSong.url === url;
 
-  const getYouTubeVideoId = (url) => {
-    const match = url.match(
-      // não tire o comentario abaixo
-      // eslint-disable-next-line no-useless-escape
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+    const playThisSong = () => {
+        playSong({ title, artist, url });
+    };
+
+    const getYouTubeVideoId = (url) => {
+        const match = url.match(
+            // não tire o comentario abaixo
+            // eslint-disable-next-line no-useless-escape
+            /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+        );
+        return match ? match[1] : null;
+    };
+
+    const getYouTubeThumbnail = (url) => {
+        if (!url) {
+            return 'https://via.placeholder.com/150';
+        }
+
+        const videoId = getYouTubeVideoId(url);
+
+        if (videoId) {
+            return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        }
+
+        return 'https://via.placeholder.com/150';
+    };
+
+    return (
+        <SongContainer isPlaying={isPlaying}>
+            <GlobalStyle />
+                <SongImage src={getYouTubeThumbnail(url)} alt="Thumbnail" />
+                <SongInfo>
+                    <SongTitle>{title}</SongTitle>
+                    <SongArtist>{artist}</SongArtist>
+                </SongInfo>
+                <ControlsContainer>
+                    <PlayButton onClick={playThisSong}>
+                        <PlayButtonIcon src={isPlaying ? btnPause : btnPlay} alt={isPlaying ? 'Pause' : 'Play'} />
+                    </PlayButton>
+                    <MoreButton>
+                        <MoreButtonIcon src={btnTresPontos} alt="Mais" />
+                    </MoreButton>
+                </ControlsContainer>
+        </SongContainer>
     );
-    return match ? match[1] : null;
-  };
-
-  const getYouTubeThumbnail = (url) => {
-    if (!url) {
-      return 'https://via.placeholder.com/150';
-    }
-
-    const videoId = getYouTubeVideoId(url);
-
-    if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    }
-
-    return 'https://via.placeholder.com/150';
-  };
-
-  return (
-    <SongContainer>
-      <GlobalStyle />
-      <SongImage src={getYouTubeThumbnail(url)} alt="Thumbnail" />
-      <SongInfo>
-        <SongTitle>{title}</SongTitle>
-        <SongArtist>{artist}</SongArtist>
-      </SongInfo>
-      <ControlsContainer>
-        <PlayButton onClick={playThisSong}>
-          <PlayButtonIcon src={btnPlay} alt="Play" />
-        </PlayButton>
-        <MoreButton>
-          <MoreButtonIcon src={btnTresPontos} alt="Mais" />
-        </MoreButton>
-      </ControlsContainer>
-    </SongContainer>
-  );
 };
 
 export default Song;
