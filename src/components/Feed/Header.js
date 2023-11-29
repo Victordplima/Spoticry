@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';  // Importa NavLink do react-router-dom
+import { NavLink } from 'react-router-dom';
 import btnMenu from '../../assets/btnMenu.png';
 import searchIcon from '../../assets/lupa.png';
 import logo from '../../assets/logo.png';
@@ -26,7 +26,6 @@ const MenuButton = styled.div`
   cursor: pointer;
 `;
 
-// Use NavLink para tornar o logo um link
 const Logo = styled(NavLink)`
   background-image: url(${logo});
   background-size: contain;
@@ -80,7 +79,6 @@ const Header = () => {
       <HeaderContainer>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <MenuButton onClick={toggleSidebar} />
-          {/* Use o NavLink aqui para fazer o logo um link */}
           <Logo to="/feed" />
         </div>
         <SearchContainer>

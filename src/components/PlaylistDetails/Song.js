@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import btnPlay from '../../assets/btnPlay2.png';
 import btnPause from '../../assets/btnPause.png';
 import btnTresPontos from '../../assets/btnTresPontos.png';
 import { useMusic } from '../../MusicContext';
 import { createGlobalStyle } from 'styled-components';
+import SongMenu from './SongMenu';
+import { useParams } from 'react-router-dom';
+
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -53,8 +56,8 @@ const SongContainer = styled.div`
 `;
 
 const SongImage = styled.img`
-  width: 100px; /* Ajuste o tamanho conforme necessário */
-  height: 100px; /* Ajuste o tamanho conforme necessário */
+  width: 100px;
+  height: 100px; 
   margin-right: 20px;
 `;
 
@@ -77,6 +80,7 @@ const ControlsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
+  position: relative;
 `;
 
 const PlayButton = styled.button`
@@ -90,8 +94,8 @@ const PlayButton = styled.button`
 `;
 
 const PlayButtonIcon = styled.img`
-  width: 32px; /* Ajuste o tamanho conforme necessário */
-  height: 32px; /* Ajuste o tamanho conforme necessário */
+  width: 32px; 
+  height: 32px;
   margin-right: 8px;
 `;
 
@@ -105,17 +109,30 @@ const MoreButton = styled.button`
 `;
 
 const MoreButtonIcon = styled.img`
-  width: 24px; /* Ajuste o tamanho conforme necessário */
-  height: 24px; /* Ajuste o tamanho conforme necessário */
+  width: 24px;
+  height: 24px;
 `;
 
-const Song = ({ title, artist, url }) => {
-    const { currentSong, playSong } = useMusic();
+const MenuWrapper = styled.div`
+  position: relative;
+`;
 
+const Song = ({ title, artist, url, id }) => {
+    const { currentSong, playSong } = useMusic();
     const isPlaying = currentSong && currentSong.url === url;
+    const [isMenuVisible, setMenuVisible] = useState(false);
+    const { playlistId } = useParams();
 
     const playThisSong = () => {
         playSong({ title, artist, url });
+    };
+
+    const toggleMenu = () => {
+        setMenuVisible(!isMenuVisible);
+    };
+
+    const closeMenu = () => {
+        setMenuVisible(false);
     };
 
     const getYouTubeVideoId = (url) => {
@@ -144,19 +161,24 @@ const Song = ({ title, artist, url }) => {
     return (
         <SongContainer isPlaying={isPlaying}>
             <GlobalStyle />
-                <SongImage src={getYouTubeThumbnail(url)} alt="Thumbnail" />
-                <SongInfo>
-                    <SongTitle>{title}</SongTitle>
-                    <SongArtist>{artist}</SongArtist>
-                </SongInfo>
-                <ControlsContainer>
-                    <PlayButton onClick={playThisSong}>
-                        <PlayButtonIcon src={isPlaying ? btnPause : btnPlay} alt={isPlaying ? 'Pause' : 'Play'} />
-                    </PlayButton>
-                    <MoreButton>
-                        <MoreButtonIcon src={btnTresPontos} alt="Mais" />
-                    </MoreButton>
-                </ControlsContainer>
+            <SongImage src={getYouTubeThumbnail(url)} alt="Thumbnail" />
+            <SongInfo>
+                <SongTitle>{title}</SongTitle>
+                <SongArtist>{artist}</SongArtist>
+            </SongInfo>
+            <ControlsContainer>
+                <PlayButton onClick={playThisSong}>
+                    <PlayButtonIcon src={isPlaying ? btnPause : btnPlay} alt={isPlaying ? 'Pause' : 'Play'} />
+                </PlayButton>
+                <MoreButton onClick={toggleMenu}>
+                    <MoreButtonIcon src={btnTresPontos} alt="Mais" />
+                </MoreButton>
+                {isMenuVisible && (
+                    <MenuWrapper>
+                        <SongMenu closeMenu={closeMenu} playlistId={playlistId} songId={id} />
+                    </MenuWrapper>
+                )}
+            </ControlsContainer>
         </SongContainer>
     );
 };

@@ -152,7 +152,7 @@ function PlaylistDetail() {
                                 {Array.isArray(songs) &&
                                     songs.map((song) => (
                                         <li key={song.id}>
-                                            <Song title={song.title} artist={song.artist} url={song.url} />
+                                            <Song title={song.title} artist={song.artist} url={song.url} id={song.id} />
                                         </li>
                                     ))}
                             </ul>
