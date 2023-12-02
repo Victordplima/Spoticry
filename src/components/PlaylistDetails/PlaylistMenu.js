@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import EditPlaylistModal from './EditPlaylistModal';
 
 const PlaylistMenuContainer = styled.div`
   font-family: 'Roboto', sans-serif;
   position: absolute;
-  bottom: -200;
+  bottom: 130px;  // Corrigindo a propriedade bottom
   right: 0;
   background-color: #333;
   color: #fff;
@@ -22,16 +23,23 @@ const PlaylistMenuItem = styled.div`
   }
 `;
 
-const PlaylistMenu = ({ closeMenu }) => {
-    const handleMenuItemClick = () => {
-        closeMenu();
+
+const PlaylistMenu = () => {
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
     };
 
     return (
         <PlaylistMenuContainer>
-            <PlaylistMenuItem onClick={handleMenuItemClick}>Excluir playlist</PlaylistMenuItem>
-            <PlaylistMenuItem onClick={handleMenuItemClick}>Editar playlist</PlaylistMenuItem>
+            <PlaylistMenuItem onClick={handleOpenModal}>Editar Playlists</PlaylistMenuItem>
             {/* Adicione mais itens do menu conforme necessário */}
+            {isModalOpen && <EditPlaylistModal onClose={handleCloseModal} isOpen={isModalOpen} />}
         </PlaylistMenuContainer>
     );
 };

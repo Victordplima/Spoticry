@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -22,21 +23,6 @@ const ModalWrapper = styled.div`
   border-radius: 8px;
 `;
 
-const PlaylistList = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const PlaylistItem = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-
-  input {
-    margin-right: 10px;
-  }
-`;
-
 const EditPlaylistButton = styled.button`
   margin-top: 12px;
   padding: 10px 20px;
@@ -48,35 +34,35 @@ const EditPlaylistButton = styled.button`
 `;
 
 const EditPlaylistModal = ({ isOpen, onClose }) => {
-    const [playlists, setPlaylists] = useState([]);
-    const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+    const [playlist, setPlaylist] = useState(null);
     const [updatedName, setUpdatedName] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const location = useLocation();
+    const playlistIdFromUrl = location.pathname.split('/').pop();
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/playlist', {
-                    headers: {
-                        Authorization: localStorage.getItem('token'),
-                    },
-                });
-                setPlaylists(response.data.playlists);
+                if (playlistIdFromUrl) {
+                    const response = await axios.get(`https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/playlist/${playlistIdFromUrl}`, {
+                        headers: {
+                            Authorization: token
+                        },
+                    });
+                    setPlaylist(response.data.playlist);
+                }
             } catch (error) {
-                console.error('Erro ao obter playlists:', error);
-                setError('Erro ao carregar playlists. Tente novamente.');
+                console.error('Erro ao obter a playlist:', error);
+                setError('Erro ao carregar a playlist. Tente novamente.');
             }
         };
 
         if (isOpen) {
             fetchData();
         }
-    }, [isOpen]);
-
-    const handleToggleSelection = (playlistId) => {
-        setSelectedPlaylistId(playlistId === selectedPlaylistId ? null : playlistId);
-    };
+    }, [isOpen, playlistIdFromUrl, token]);
 
     const handleInputChange = (e) => {
         setUpdatedName(e.target.value);
@@ -90,18 +76,18 @@ const EditPlaylistModal = ({ isOpen, onClose }) => {
 
     const handleEditSelected = async () => {
         try {
-            if (selectedPlaylistId) {
+            if (playlist) {
                 setLoading(true);
                 toast.info('Editando playlist, aguarde...');
 
                 await axios.patch(
-                    `https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/playlist/${selectedPlaylistId}`,
+                    `https://mqjnto3qw2.execute-api.us-east-1.amazonaws.com/default/playlist/${playlist._id}`,
                     {
                         name: updatedName,
                     },
                     {
                         headers: {
-                            Authorization: localStorage.getItem('token'),
+                            Authorization: token
                         },
                     }
                 );
@@ -125,18 +111,6 @@ const EditPlaylistModal = ({ isOpen, onClose }) => {
                 <h2>EDITAR PLAYLIST</h2>
                 {isLoading && <p>Processando...</p>}
                 {error && <p>{error}</p>}
-                <PlaylistList>
-                    {playlists.map((playlist) => (
-                        <PlaylistItem key={playlist._id}>
-                            <input
-                                type="radio"
-                                checked={playlist._id === selectedPlaylistId}
-                                onChange={() => handleToggleSelection(playlist._id)}
-                            />
-                            {playlist._name} | {playlist._description}
-                        </PlaylistItem>
-                    ))}
-                </PlaylistList>
                 <div>
                     <label htmlFor="updatedName">Novo Nome: </label>
                     <input type="text" id="updatedName" name="updatedName" value={updatedName} onChange={handleInputChange} />

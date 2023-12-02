@@ -10,7 +10,6 @@ import EditSongButton from '../components/ManageMusic/Song/EditSongButton';
 // Playlists
 import AddPlaylistButton from '../components/ManageMusic/Playlist/AddPlaylistButton';
 import EditPlaylistButton from '../components/ManageMusic/Playlist/EditPlaylistButton';
-import AddTrackToPlaylistButton from '../components/ManageMusic/Playlist/AddTrackToPlaylistButton';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -42,7 +41,6 @@ function ManageMusicPage() {
             <h2>Playlists</h2>
             <AddPlaylistButton />
             <EditPlaylistButton />
-            <AddTrackToPlaylistButton />
             <ToastContainer />
         </>
     );
