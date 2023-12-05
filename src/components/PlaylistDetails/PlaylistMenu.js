@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import EditPlaylistModal from './EditPlaylistModal';
+import RemovePlaylistModal from './RemovePlaylistModal';
 
 const PlaylistMenuContainer = styled.div`
   font-family: 'Roboto', sans-serif;
   position: absolute;
-  bottom: 130px;  // Corrigindo a propriedade bottom
+  bottom: 130px;
   right: 0;
   background-color: #333;
   color: #fff;
@@ -25,21 +26,34 @@ const PlaylistMenuItem = styled.div`
 
 
 const PlaylistMenu = () => {
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const [isRemoveModalOpen, setRemoveModalOpen] = useState(false);
 
-    const handleOpenModal = () => {
-        setModalOpen(true);
+    const handleOpenEditModal = () => {
+        setEditModalOpen(true);
     };
 
-    const handleCloseModal = () => {
-        setModalOpen(false);
+    const handleCloseEditModal = () => {
+        setEditModalOpen(false);
+    };
+
+    const handleOpenRemoveModal = () => {
+        setRemoveModalOpen(true);
+    };
+
+    const handleCloseRemoveModal = () => {
+        setRemoveModalOpen(false);
     };
 
     return (
         <PlaylistMenuContainer>
-            <PlaylistMenuItem onClick={handleOpenModal}>Editar Playlists</PlaylistMenuItem>
+            <PlaylistMenuItem onClick={handleOpenEditModal}>Editar Playlists</PlaylistMenuItem>
+            <PlaylistMenuItem onClick={handleOpenRemoveModal}>Remover Playlist</PlaylistMenuItem>
             {/* Adicione mais itens do menu conforme necessário */}
-            {isModalOpen && <EditPlaylistModal onClose={handleCloseModal} isOpen={isModalOpen} />}
+            {isEditModalOpen && <EditPlaylistModal onClose={handleCloseEditModal} isOpen={isEditModalOpen} />}
+            {isRemoveModalOpen && (
+                <RemovePlaylistModal onClose={handleCloseRemoveModal} isOpen={isRemoveModalOpen} />
+            )}
         </PlaylistMenuContainer>
     );
 };
