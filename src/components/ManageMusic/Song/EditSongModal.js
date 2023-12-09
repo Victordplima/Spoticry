@@ -47,7 +47,7 @@ const EditSongButton = styled.button`
   cursor: pointer;
 `;
 
-const EditSongModal = ({ isOpen, onClose }) => {
+const EditSongModal = ({ isOpen, onClose  }) => {
     const [songs, setSongs] = useState([]);
     const [selectedSongId, setSelectedSongId] = useState(null);
     const [updatedDetails, setUpdatedDetails] = useState({});

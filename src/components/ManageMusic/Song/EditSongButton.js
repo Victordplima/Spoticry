@@ -58,7 +58,7 @@ const EditSongButton = () => {
                 <ButtonImage src={btnEdit} alt="Ícone do Botão" />
                 <ButtonText>Editar música</ButtonText>
             </CustomButton>
-            <EditSongModal isOpen={isModalOpen} onRequestClose={handleCloseModal} />
+            <EditSongModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </Container>
     );
 };
