@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import btnMenu from '../../assets/btnMenu.png';
 import searchIcon from '../../assets/lupa.png';
 import logo from '../../assets/logo.png';
@@ -14,7 +14,7 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #292929; 
+  border-bottom: 1px solid #292929;
   height: 80px;
 `;
 
@@ -68,10 +68,16 @@ const UserImage = styled.img`
 `;
 
 const Header = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSearch = () => {
+    navigate(`/search?term=${searchTerm}`);
   };
 
   return (
@@ -82,7 +88,13 @@ const Header = () => {
           <Logo to="/feed" />
         </div>
         <SearchContainer>
-          <SearchInput type="text" placeholder="Pesquisa" />
+          <SearchInput
+            type="text"
+            placeholder="Pesquisa"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>Pesquisar</button>
         </SearchContainer>
         <UserInfo>
           <UserImage src={user} alt="Usuário" />

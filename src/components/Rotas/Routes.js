@@ -6,6 +6,7 @@ import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
 import ManageMusicPage from '../../pages/ManageMusicPage';
 import PlaylistDetails from '../../pages/PlaylistDetails';
+import SearchPage from '../../pages/SearchPage';
 import NotFound from '../../pages/NotFound';
 
 const AppRoutes = () => {
@@ -17,6 +18,7 @@ const AppRoutes = () => {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/manage-music" element={<ManageMusicPage />} />
             <Route path="/playlist/:playlistId" element={<PlaylistDetails />} />
+            <Route path="/search" element={<SearchPage/>} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
