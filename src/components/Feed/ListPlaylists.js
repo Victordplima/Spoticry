@@ -81,8 +81,29 @@ const CarouselName = styled.h2`
   font-size: 32px;
 `;
 
+
+const OrderButton = styled.button`
+  background-color: #212121;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #037dfa;
+  }
+`;
+
 const ListPlaylists = () => {
     const [playlists, setPlaylists] = useState([]);
+    const [ordenacao, setOrdenacao] = useState('asc'); // Estado para rastrear a ordenação
     const token = localStorage.getItem('token');
     const [carouselPosition, setCarouselPosition] = useState(0);
 
@@ -99,8 +120,6 @@ const ListPlaylists = () => {
                         },
                     }
                 );
-
-                console.log('Dados da API de playlists:', response.data);
 
                 // Mapeia os dados para o formato desejado
                 const playlistsWithImages = response.data.playlists.map((playlist) => ({
@@ -127,6 +146,20 @@ const ListPlaylists = () => {
         }
     };
 
+    // Função para ordenar playlists com base no critério escolhido
+    const ordenarPlaylists = (criterio) => {
+        const playlistsOrdenadas = [...playlists].sort((a, b) => {
+            if (ordenacao === 'asc') {
+                return a[criterio].localeCompare(b[criterio]);
+            } else {
+                return b[criterio].localeCompare(a[criterio]);
+            }
+        });
+
+        setPlaylists(playlistsOrdenadas);
+        setOrdenacao(ordenacao === 'asc' ? 'desc' : 'asc'); // Inverte a ordenação
+    };
+
     return (
         <PlaylistContainer>
             <PlaylistHeader>
@@ -143,10 +176,14 @@ const ListPlaylists = () => {
                     </RightButton>
                 </ControlsContainer>
             </PlaylistHeader>
+            <div>
+                {/* Adicione botões para ordenação */}
+                <OrderButton onClick={() => ordenarPlaylists('name')}>Ordenar por Nome (Asc)</OrderButton>
+                <OrderButton onClick={() => ordenarPlaylists('name')}>Ordenar por Nome (Desc)</OrderButton>
+            </div>
             <PlaylistWrapper style={{ transform: `translateX(-${carouselPosition}px)` }}>
                 {playlists.map((playlist) => (
                     <PlaylistCard key={playlist.id}>
-                        {/* Adicione o style diretamente no componente Link */}
                         <Link to={`/playlist/${playlist.id}`} style={{ textDecoration: 'none' }}>
                             <PlaylistImage src={playlist.imageUrl} alt="Playlist" />
                             <PlaylistDetails>

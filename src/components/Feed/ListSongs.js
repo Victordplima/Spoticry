@@ -43,6 +43,25 @@ const Name = styled.h2`
   padding-left: 10px;
 `;
 
+const OrderButton = styled.button`
+  background-color: #212121;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #037dfa;
+  }
+`;
+
 
 const ListSongs = () => {
     const [musicas, setMusicas] = useState([]);
@@ -87,9 +106,25 @@ const ListSongs = () => {
         return 'https://via.placeholder.com/150';
     };
 
+    // Função para ordenar músicas com base no critério escolhido
+    const ordenarMusicas = (criterio) => {
+        const musicasOrdenadas = [...musicas].sort((a, b) => {
+            if (a[criterio] < b[criterio]) return -1;
+            if (a[criterio] > b[criterio]) return 1;
+            return 0;
+        });
+
+        setMusicas(musicasOrdenadas);
+    };
+
     return (
         <SongGridContainer>
-            <Name> 🔥 Músicas </Name>
+            <div>
+                <Name> 🔥 Músicas </Name>
+                <OrderButton onClick={() => ordenarMusicas('title')}>Ordenar por Título</OrderButton>
+                <OrderButton onClick={() => ordenarMusicas('artist')}>Ordenar por Artista</OrderButton>
+                {/* Adicione mais botões conforme necessário para outros critérios */}
+            </div>
             <SongGrid>
                 {musicas.map((musica) => (
                     <SongCard key={musica.id}>
