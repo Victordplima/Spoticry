@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import btnHome from '../../assets/btnHome.png';
 import btnUpgrade from '../../assets/btnUpgrade.png';
-import btnGerenciador from '../../assets/btnGerenciador.png';
 import AddSongButton from '../ManageMusic/Song/AddSongButton';
 import AddPlaylistButton from '../ManageMusic/Playlist/AddPlaylistButton';
+import RemoveSongsButton from '../ManageMusic/Song/RemoveSongButton';
+import EditSongButton from '../ManageMusic/Song/EditSongButton';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const SidebarContainer = styled.div`
@@ -64,6 +65,10 @@ const BottomButtonsContainer = styled.div`
   flex-direction: column;
 `;
 
+const CategoryTitle = styled.h2`
+    display: flex;
+    justify-content: center;
+`
 
 const Sidebar = ({ isOpen }) => {
     const location = useLocation();
@@ -89,12 +94,6 @@ const Sidebar = ({ isOpen }) => {
                     <ButtonText>Início</ButtonText>
                 </SidebarButton>
             </NavLinkButton>
-            <NavLinkButton to="/manage-music" className={location.pathname === '/manage-music' ? 'active' : ''}>
-                <SidebarButton active={location.pathname === '/manage-music'}>
-                    <ButtonImage src={btnGerenciador} alt="Ícone do Botão" />
-                    <ButtonText>Gerenciar músicas</ButtonText>
-                </SidebarButton>
-            </NavLinkButton>
             <NavLinkButton to="/" className={location.pathname === '/' ? 'active' : ''}>
                 <SidebarButton active={location.pathname === '/'}>
                     <ButtonImage src={btnUpgrade} alt="Ícone do Botão" />
@@ -103,8 +102,16 @@ const Sidebar = ({ isOpen }) => {
             </NavLinkButton>
             <Separator />
             <BottomButtonsContainer>
-                <AddSongButton />
+
+                <CategoryTitle>Músicas</CategoryTitle>
+                <AddSongButton />              
+                <EditSongButton />
+                <RemoveSongsButton />
+                <Separator />
+
+                <CategoryTitle>Playlists</CategoryTitle>
                 <AddPlaylistButton />
+
             </BottomButtonsContainer>
         </SidebarContainer>
     );

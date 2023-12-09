@@ -1,13 +1,44 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import RemoveSongsModal from './RemoveSongsModal';
+import btnRemove from '../../../assets/btnRemover.png'
 
-const StyledButton = styled.button`
-  background-color: #ff0000;
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+  font-family: 'Roboto', sans-serif;
+`;
+
+const CustomButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: red;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  border-radius: 25px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  height: 45px;
+
+  &:hover {
+    background-color: #333;
+  }
+`;
+
+const ButtonImage = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+`;
+
+const ButtonText = styled.span`
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 const RemoveSongsButton = () => {
@@ -22,10 +53,13 @@ const RemoveSongsButton = () => {
     };
 
     return (
-        <>
-            <StyledButton onClick={handleOpenModal}>Remover Músicas</StyledButton>
+        <Container>
+            <CustomButton onClick={handleOpenModal}>
+                <ButtonImage src={btnRemove} alt="Ícone do Botão" />
+                <ButtonText>Remover música</ButtonText>
+            </CustomButton>
             <RemoveSongsModal isOpen={isModalOpen} onRequestClose={handleCloseModal} />
-        </>
+        </Container>
     );
 };
 
