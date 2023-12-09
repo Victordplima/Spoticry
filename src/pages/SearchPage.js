@@ -56,6 +56,8 @@ const PlaylistItem = styled.li`
 
 const PlaylistImage = styled.img`
   margin-right: 20px;
+  width: 150px;
+  height: 150px;
 `;
 
 const PlaylistInfo = styled.div`

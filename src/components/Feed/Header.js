@@ -56,6 +56,10 @@ const SearchInput = styled.input`
   background-size: 20px;
 `;
 
+const SearchButton = styled.button`
+  display: none;
+`;
+
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
@@ -68,41 +72,50 @@ const UserImage = styled.img`
 `;
 
 const Header = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
 
-  const handleSearch = () => {
-    navigate(`/search?term=${searchTerm}`);
-  };
+    const handleSearch = () => {
+        navigate(`/search?term=${searchTerm}`);
+    };
 
-  return (
-    <>
-      <HeaderContainer>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <MenuButton onClick={toggleSidebar} />
-          <Logo to="/feed" />
-        </div>
-        <SearchContainer>
-          <SearchInput
-            type="text"
-            placeholder="Pesquisa"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button onClick={handleSearch}>Pesquisar</button>
-        </SearchContainer>
-        <UserInfo>
-          <UserImage src={user} alt="Usuário" />
-        </UserInfo>
-      </HeaderContainer>
-      <Sidebar isOpen={isOpen} />
-    </>
-  );
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
+    return (
+        <>
+            <HeaderContainer>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <MenuButton onClick={toggleSidebar} />
+                    <Logo to="/feed" />
+                </div>
+                <SearchContainer>
+                    <SearchInput
+                        type="text"
+                        placeholder="Pesquisa"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                    />
+                    <SearchButton onClick={handleSearch}>
+                        <img src={searchIcon} alt="Search" style={{ width: '20px', height: '20px' }} />
+                    </SearchButton>
+                </SearchContainer>
+                <UserInfo>
+                    <UserImage src={user} alt="Usuário" />
+                </UserInfo>
+            </HeaderContainer>
+            <Sidebar isOpen={isOpen} />
+        </>
+    );
 };
 
 export default Header;
