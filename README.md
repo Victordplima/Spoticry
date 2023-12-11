@@ -2,7 +2,7 @@
 
 ---
 
-## 💡 Sobre o Projeto
+## 💡 Sobre o Projeto 💡 ##
 
 Este projeto é uma aplicação web que permite gerenciar musicas e playlists e reproduzi-las:
 
