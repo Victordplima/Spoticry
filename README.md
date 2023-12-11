@@ -2,7 +2,7 @@
 
 ---
 
-## 💡 Sobre o Projeto 💡 ##
+## 💡 Sobre o Projeto ##
 
 Este projeto é uma aplicação web que permite gerenciar musicas e playlists e reproduzi-las:
 
@@ -26,6 +26,8 @@ Este projeto é uma aplicação web que permite gerenciar musicas e playlists e 
 
 
 ## 🚀 Como Executar o Projeto
+Link para acessar no [Surge](https://macabre-winter.surge.sh/)
+<br><br>
 Siga os passos abaixo para executar o projeto em seu ambiente local:
    
 1. **Clone o repositório**
